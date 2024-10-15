@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Jgrasp\PrestashopMigrationPlugin\DataCollector\DataCollectorInterface;
 use Jgrasp\PrestashopMigrationPlugin\Persister\PersisterInterface;
 use Jgrasp\PrestashopMigrationPlugin\Validator\ViolationBagInterface;
+use JMS\Serializer\SerializerInterface;
 
 class ResourceImporter implements ImporterInterface
 {
@@ -23,13 +24,16 @@ class ResourceImporter implements ImporterInterface
 
     private ViolationBagInterface $violationBag;
 
+    private SerializerInterface $serializer;
+
     public function __construct(
         string $name,
         int $step,
         DataCollectorInterface $collector,
         PersisterInterface $persister,
         EntityManagerInterface $entityManager,
-        ViolationBagInterface $violationBag
+        ViolationBagInterface $violationBag,
+        SerializerInterface $serializer
     ) {
         $this->name          = $name;
         $this->step          = $step;
@@ -37,22 +41,28 @@ class ResourceImporter implements ImporterInterface
         $this->persister     = $persister;
         $this->entityManager = $entityManager;
         $this->violationBag  = $violationBag;
+        $this->serializer    = $serializer;
     }
 
-    public function import(callable $callable = null): void
+    public function import(array $criteria = [], callable $callable = null): void
     {
-        $offset = 0;
+        for ($offset = 0, $size = $this->size(); $offset < $size; $offset += $this->step) {
+            $collection = $this->collector->collect($criteria, $this->step, $offset);
 
-        while ($offset < $this->size()) {
-            $collection = $this->collector->collect($this->step, $offset);
+            if (empty($collection)) {
+                return ;
+            }
 
             foreach ($collection as $item) {
-                $this->persister->persist($item);
+                $syliusResource = $this->persister->persist($item);
+
+                if ($syliusResource !== null) {
+                    echo json_encode($item) . PHP_EOL . PHP_EOL;
+                    echo str_replace(PHP_EOL, '', $this->serializer->serialize($syliusResource, 'json')) . PHP_EOL . PHP_EOL . PHP_EOL;
+                }
             }
 
             $this->entityManager->flush();
-
-            $offset += $this->step;
 
             if (null !== $callable) {
                 $callable($this->step, $this->violationBag->all());
@@ -60,9 +70,15 @@ class ResourceImporter implements ImporterInterface
         }
     }
 
-    public function size(): int
+    public function size(array $criteria = [], ?int $limit = null): int
     {
-        return $this->collector->size();
+        $s = $this->collector->size($criteria);
+
+        if (!empty($limit) && $limit < $s) {
+            return $limit;
+        }
+
+        return $s;
     }
 
     public function getName(): string

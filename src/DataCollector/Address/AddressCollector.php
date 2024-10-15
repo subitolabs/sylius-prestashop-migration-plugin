@@ -16,12 +16,12 @@ class AddressCollector implements DataCollectorInterface
         $this->repository = $repository;
     }
 
-    public function collect(int $limit, int $offset): array
+    public function collect(array $critiera, int $limit, int $offset): array
     {
         return $this->repository->findCustomerAddresses($limit, $offset);
     }
 
-    public function size(): int
+    public function size(array $criteria = []): int
     {
         return $this->repository->countCustomerAddresses();
     }

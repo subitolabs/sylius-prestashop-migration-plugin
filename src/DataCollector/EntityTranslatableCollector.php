@@ -18,9 +18,9 @@ class EntityTranslatableCollector implements DataCollectorInterface
         $this->repository = $repository;
     }
 
-    public function collect(int $limit, int $offset): array
+    public function collect(array $critiera, int $limit, int $offset): array
     {
-        $data = $this->collector->collect($limit, $offset);
+        $data = $this->collector->collect($critiera, $limit, $offset);
 
         foreach ($data as &$row) {
             $entityId     = (int) $row[$this->repository->getPrimaryKey()];
@@ -55,8 +55,8 @@ class EntityTranslatableCollector implements DataCollectorInterface
         return $data;
     }
 
-    public function size(): int
+    public function size(array $criteria = []): int
     {
-        return $this->collector->size();
+        return $this->collector->size($criteria);
     }
 }

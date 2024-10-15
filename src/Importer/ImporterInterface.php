@@ -6,9 +6,9 @@ namespace Jgrasp\PrestashopMigrationPlugin\Importer;
 
 interface ImporterInterface
 {
-    public function import(callable $callable = null): void;
+    public function import(array $criteria = [], callable $callable = null): void;
 
-    public function size(): int;
+    public function size(array $criteria = [], ?int $limit = null): int;
 
     public function getName(): string;
 }

@@ -14,9 +14,9 @@ class EntityRepository implements EntityRepositoryInterface
 
     private string $_entity;
 
-    private string $_primaryKey;
+    private ?string $_primaryKey;
 
-    public function __construct(string $_entity, string $_prefix, string $_primaryKey, Connection $connection)
+    public function __construct(string $_entity, string $_prefix, ?string $_primaryKey, Connection $connection)
     {
         $this->_entity     = $_entity;
         $this->_prefix     = $_prefix;
@@ -50,12 +50,20 @@ class EntityRepository implements EntityRepositoryInterface
         return $this->connection->executeQuery($query)->fetchAllAssociative();
     }
 
-    public function findAll(int $limit = null, int $offset = null): array
+    public function findAll(array $criteria = [], int $limit = null, int $offset = null): array
     {
         $query = $this
             ->createQueryBuilder()
             ->select('*')
             ->from($this->getTable());
+
+        if (!empty($criteria)) {
+            foreach ($criteria as $field => $filter) {
+                $query->where(
+                    $query->expr()->eq($field, $query->expr()->literal($filter))
+                );
+            }
+        }
 
         if (null !== $limit && null !== $offset) {
             $query
@@ -63,20 +71,30 @@ class EntityRepository implements EntityRepositoryInterface
                 ->setFirstResult($offset);
         }
 
-        return $this->connection->executeQuery($query)->fetchAllAssociative();
+        return $this->connection->executeQuery($query->getSQL())->fetchAllAssociative();
     }
 
-    public function count(): int
+    public function count(array $criteria = []): int
     {
+        $pk = $this->getPrimaryKey();
+
         $query = $this->createQueryBuilder();
         $query
-            ->select(sprintf('COUNT(%s)', $this->getPrimaryKey()))
-            ->from($this->getTable());
+            ->select(empty($pk) ? 'COUNT(*)' : sprintf('COUNT(%s)', $this->getPrimaryKey()))
+            ->from($this->getTable(), '_table');
+
+        if (!empty($criteria)) {
+            foreach ($criteria as $field => $filter) {
+                $query = $query->where(
+                    $query->expr()->eq($field, $query->expr()->literal($filter))
+                );
+            }
+        }
 
         return (int) $this->connection->executeQuery($query)->fetchOne();
     }
 
-    public function getPrimaryKey(): string
+    public function getPrimaryKey(): ?string
     {
         return $this->_primaryKey;
     }

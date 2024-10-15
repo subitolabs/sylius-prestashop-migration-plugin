@@ -15,6 +15,7 @@ use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -52,6 +53,9 @@ class PrestashopMigrationImageCommand extends Command
         $this->downloader          = $downloader;
         $this->productImageFactory = $productImageFactory;
         $this->imageUploader       = $imageUploader;
+
+        $this->addOption('criteria', null, InputOption::VALUE_REQUIRED, 'Filter resources.', []);
+        $this->addOption('limit', null, InputOption::VALUE_REQUIRED, 'Limit number of resources.');
     }
 
     public function execute(InputInterface $input, OutputInterface $output)
@@ -59,7 +63,10 @@ class PrestashopMigrationImageCommand extends Command
         $io = new SymfonyStyle($input, $output);
         $io->title('Start migration of product images');
 
-        $products = $this->resourceRepository->findAll();
+        $inCriteria = $input->getOption('criteria');
+        $inLimit    = $input->getOption('limit');
+
+        $products = $this->resourceRepository->findBy(json_decode($inCriteria, true) ?? [], [], $inLimit);
 
         $progressBar = new ProgressBar($output, count($products));
 
