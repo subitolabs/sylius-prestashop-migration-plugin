@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Jgrasp\PrestashopMigrationPlugin\Validator\Address;
@@ -25,5 +26,4 @@ class ZoneValidator implements ValidatorInterface
     {
         return $resource->hasMembers() && $this->validator->validate($resource);
     }
-
 }

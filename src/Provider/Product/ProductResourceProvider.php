@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Jgrasp\PrestashopMigrationPlugin\Provider\Product;
@@ -21,7 +22,7 @@ class ProductResourceProvider implements ResourceProviderInterface
     public function __construct(ResourceProviderInterface $provider, FactoryInterface $factory)
     {
         $this->provider = $provider;
-        $this->factory = $factory;
+        $this->factory  = $factory;
     }
 
     public function getResource(ModelInterface $model): ResourceInterface

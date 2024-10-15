@@ -1,9 +1,11 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Jgrasp\PrestashopMigrationPlugin\Repository\Product;
 
 use Jgrasp\PrestashopMigrationPlugin\Repository\EntityRepository;
+
 use function Doctrine\DBAL\Query\QueryBuilder;
 
 class ProductRepository extends EntityRepository
@@ -15,7 +17,7 @@ class ProductRepository extends EntityRepository
         $query
             ->select('*')
             ->from($this->getTable())
-            ->where($query->expr()->like("reference", $query->expr()->literal($reference)));
+            ->where($query->expr()->like('reference', $query->expr()->literal($reference)));
 
         return $this->getConnection()->executeQuery($query)->fetchAllAssociative();
     }
@@ -27,7 +29,7 @@ class ProductRepository extends EntityRepository
         $query
             ->select('*')
             ->from($this->getTableTranslation())
-            ->where($query->expr()->like("link_rewrite", $query->expr()->literal($slug)));
+            ->where($query->expr()->like('link_rewrite', $query->expr()->literal($slug)));
 
         return $this->getConnection()->executeQuery($query)->fetchAllAssociative();
     }
@@ -38,8 +40,8 @@ class ProductRepository extends EntityRepository
 
         $query
             ->select('*')
-            ->from($this->getPrefix().'category_product')
-            ->where($query->expr()->eq("id_product", $productId));
+            ->from($this->getPrefix() . 'category_product')
+            ->where($query->expr()->eq('id_product', $productId));
 
         return $this->getConnection()->executeQuery($query)->fetchAllAssociative();
     }
@@ -51,7 +53,7 @@ class ProductRepository extends EntityRepository
         $query
             ->select('*')
             ->from($this->getTableChannel())
-            ->where($query->expr()->eq("id_product", $productId));
+            ->where($query->expr()->eq('id_product', $productId));
 
         return $this->getConnection()->executeQuery($query)->fetchAllAssociative();
     }
@@ -62,8 +64,8 @@ class ProductRepository extends EntityRepository
 
         $query
             ->select('*')
-            ->from($this->getPrefix().'image')
-            ->where($query->expr()->eq("id_product", $productId))
+            ->from($this->getPrefix() . 'image')
+            ->where($query->expr()->eq('id_product', $productId))
             ->orderBy('position', 'ASC');
 
         return $this->getConnection()->executeQuery($query)->fetchAllAssociative();
@@ -80,6 +82,5 @@ class ProductRepository extends EntityRepository
             ->andWhere($query->expr()->eq('id_shop', $shopId));
 
         return (float) $this->getConnection()->executeQuery($query)->fetchOne();
-
     }
 }

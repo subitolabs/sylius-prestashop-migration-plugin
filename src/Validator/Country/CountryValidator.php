@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Jgrasp\PrestashopMigrationPlugin\Validator\Country;
@@ -25,5 +26,4 @@ class CountryValidator implements ValidatorInterface
     {
         return $this->validator->validate($resource) && $resource->isEnabled();
     }
-
 }

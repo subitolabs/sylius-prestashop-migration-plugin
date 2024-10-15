@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Jgrasp\PrestashopMigrationPlugin\Validator;
@@ -17,8 +18,7 @@ class ViolationBag implements ViolationBagInterface
     public function __construct(LocaleContextInterface $localeContext, TranslatorInterface $translator)
     {
         $this->localeContext = $localeContext;
-        $this->translator = $translator;
-
+        $this->translator    = $translator;
     }
 
     /**
@@ -28,7 +28,7 @@ class ViolationBag implements ViolationBagInterface
 
     public function all(): array
     {
-        $violations = $this->violations;
+        $violations       = $this->violations;
         $this->violations = [];
 
         return $violations;
@@ -46,6 +46,4 @@ class ViolationBag implements ViolationBagInterface
             fn(ConstraintViolationInterface $constraintViolation) => $this->addViolation(new Violation($entityId, $this->translator->trans($constraintViolation->getMessage(), $constraintViolation->getParameters())))
         );
     }
-
-
 }

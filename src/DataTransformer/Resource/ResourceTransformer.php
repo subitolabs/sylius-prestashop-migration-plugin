@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Jgrasp\PrestashopMigrationPlugin\DataTransformer\Resource;
@@ -22,9 +23,8 @@ final class ResourceTransformer implements ResourceTransformerInterface
     public function __construct(
         ResourceProviderInterface $resourceProvider,
         PropertyAttributeAccessor $propertyAttributeAccessor
-    )
-    {
-        $this->resourceProvider = $resourceProvider;
+    ) {
+        $this->resourceProvider          = $resourceProvider;
         $this->propertyAttributeAccessor = $propertyAttributeAccessor;
     }
 
@@ -33,14 +33,13 @@ final class ResourceTransformer implements ResourceTransformerInterface
         $resource = $this->resourceProvider->getResource($model);
 
         $reflectionModel = new ReflectionClass($model);
-        $properties = $reflectionModel->getProperties();
+        $properties      = $reflectionModel->getProperties();
 
         $propertyAccessor = PropertyAccess::createPropertyAccessorBuilder()
             ->enableMagicCall()
             ->getPropertyAccessor();
 
         foreach ($properties as $property) {
-
             $attribute = $this->propertyAttributeAccessor->get($property, Field::class);
 
             if ($attribute) {
@@ -63,5 +62,4 @@ final class ResourceTransformer implements ResourceTransformerInterface
 
         return $resource;
     }
-
 }

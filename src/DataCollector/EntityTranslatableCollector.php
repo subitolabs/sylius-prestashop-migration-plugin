@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Jgrasp\PrestashopMigrationPlugin\DataCollector;
@@ -13,7 +14,7 @@ class EntityTranslatableCollector implements DataCollectorInterface
 
     public function __construct(DataCollectorInterface $collector, EntityRepositoryInterface $repository)
     {
-        $this->collector = $collector;
+        $this->collector  = $collector;
         $this->repository = $repository;
     }
 
@@ -22,11 +23,10 @@ class EntityTranslatableCollector implements DataCollectorInterface
         $data = $this->collector->collect($limit, $offset);
 
         foreach ($data as &$row) {
-            $entityId = (int) $row[$this->repository->getPrimaryKey()];
+            $entityId     = (int) $row[$this->repository->getPrimaryKey()];
             $translations = $this->repository->findTranslations($entityId);
 
             foreach ($translations as $translation) {
-
                 $diff = array_diff_assoc($translation, $row);
 
                 if (!array_key_exists('id_lang', $diff)) {
@@ -59,5 +59,4 @@ class EntityTranslatableCollector implements DataCollectorInterface
     {
         return $this->collector->size();
     }
-
 }

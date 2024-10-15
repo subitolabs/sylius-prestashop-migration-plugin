@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Jgrasp\PrestashopMigrationPlugin\DataTransformer\Resource\Product;
@@ -60,34 +61,33 @@ class ProductResourceTransformer implements ResourceTransformerInterface
     private ConfigurationResolver $configurationResolver;
 
     public function __construct(
-        ResourceTransformerInterface    $transformer,
-        EntityRepositoryInterface       $productRepository,
-        EntityRepositoryInterface       $productAttributeRepository,
-        EntityRepositoryInterface       $stockAvailableRepository,
-        RepositoryInterface             $taxonRepository,
-        RepositoryInterface             $channelRepository,
-        RepositoryInterface             $productOptionValueRepository,
-        FactoryInterface                $productTaxonFactory,
-        FactoryInterface                $channelPricingFactory,
+        ResourceTransformerInterface $transformer,
+        EntityRepositoryInterface $productRepository,
+        EntityRepositoryInterface $productAttributeRepository,
+        EntityRepositoryInterface $stockAvailableRepository,
+        RepositoryInterface $taxonRepository,
+        RepositoryInterface $channelRepository,
+        RepositoryInterface $productOptionValueRepository,
+        FactoryInterface $productTaxonFactory,
+        FactoryInterface $channelPricingFactory,
         ProductVariantResolverInterface $productVariantResolver,
-        SlugGenerator                   $slugGenerator,
-        LocaleFetcher                   $localeFetcher,
-        ConfigurationResolver           $configurationResolver,
-    )
-    {
-        $this->transformer = $transformer;
-        $this->productRepository = $productRepository;
-        $this->productAttributeRepository = $productAttributeRepository;
-        $this->stockAvailableRepository = $stockAvailableRepository;
-        $this->taxonRepository = $taxonRepository;
-        $this->channelRepository = $channelRepository;
+        SlugGenerator $slugGenerator,
+        LocaleFetcher $localeFetcher,
+        ConfigurationResolver $configurationResolver,
+    ) {
+        $this->transformer                  = $transformer;
+        $this->productRepository            = $productRepository;
+        $this->productAttributeRepository   = $productAttributeRepository;
+        $this->stockAvailableRepository     = $stockAvailableRepository;
+        $this->taxonRepository              = $taxonRepository;
+        $this->channelRepository            = $channelRepository;
         $this->productOptionValueRepository = $productOptionValueRepository;
-        $this->productTaxonFactory = $productTaxonFactory;
-        $this->channelPricingFactory = $channelPricingFactory;
-        $this->defaultVariantResolver = $productVariantResolver;
-        $this->slugGenerator = $slugGenerator;
-        $this->localeFetcher = $localeFetcher;
-        $this->configurationResolver = $configurationResolver;
+        $this->productTaxonFactory          = $productTaxonFactory;
+        $this->channelPricingFactory        = $channelPricingFactory;
+        $this->defaultVariantResolver       = $productVariantResolver;
+        $this->slugGenerator                = $slugGenerator;
+        $this->localeFetcher                = $localeFetcher;
+        $this->configurationResolver        = $configurationResolver;
     }
 
     /**
@@ -104,7 +104,6 @@ class ProductResourceTransformer implements ResourceTransformerInterface
         $product = $this->transformer->transform($model);
 
         foreach ($this->localeFetcher->getLocales() as $locale) {
-
             $product->setCurrentLocale($locale->getCode());
             $product->setFallbackLocale($locale->getCode());
 
@@ -134,7 +133,7 @@ class ProductResourceTransformer implements ResourceTransformerInterface
         $slugs = $this->productRepository->findBySlug($product->getSlug());
 
         if (count($slugs) > 1) {
-            $product->setSlug($product->getSlug().'-'.$model->id);
+            $product->setSlug($product->getSlug() . '-' . $model->id);
         }
 
         $product->setSlug($this->slugGenerator->generate($product->getSlug()));
@@ -146,7 +145,7 @@ class ProductResourceTransformer implements ResourceTransformerInterface
         $list = $this->productRepository->findByReference($product->getCode());
 
         if (count($list) > 1) {
-            $product->setCode($product->getCode().'-'.$model->id);
+            $product->setCode($product->getCode() . '-' . $model->id);
         }
 
         $product->setCode(StringInflector::nameToLowercaseCode(Transliterator::transliterate($product->getCode())));
@@ -157,7 +156,7 @@ class ProductResourceTransformer implements ResourceTransformerInterface
         $categories = $this->productRepository->getCategories($model->id);
 
         foreach ($categories as $category) {
-            $categoryId = (int)$category['id_category'];
+            $categoryId = (int) $category['id_category'];
 
             /**
              * @var TaxonInterface|null $taxon
@@ -174,7 +173,7 @@ class ProductResourceTransformer implements ResourceTransformerInterface
             $productTaxon = $this->productTaxonFactory->createNew();
             $productTaxon->setProduct($product);
             $productTaxon->setTaxon($taxon);
-            $productTaxon->setPosition((int)$category['position']);
+            $productTaxon->setPosition((int) $category['position']);
 
             if (!$product->hasProductTaxon($productTaxon)) {
                 $product->addProductTaxon($productTaxon);
@@ -234,7 +233,7 @@ class ProductResourceTransformer implements ResourceTransformerInterface
         $shops = $this->productRepository->getShops($model->id);
 
         foreach ($shops as $shop) {
-            $shopId = (int)$shop['id_shop'];
+            $shopId = (int) $shop['id_shop'];
 
             /**
              * @var ChannelInterface|null $channel
@@ -249,7 +248,6 @@ class ProductResourceTransformer implements ResourceTransformerInterface
 
             //if product has no options, we need to create a default variation to set the price
             if (!$product->hasOptions()) {
-
                 /**
                  * @var ProductVariantInterface $productVariant
                  */
@@ -262,7 +260,7 @@ class ProductResourceTransformer implements ResourceTransformerInterface
                     $channelPricing->setChannelCode($channel->getCode());
                 }
 
-                $channelPricing->setPrice((int)$shop['price'] * 100);
+                $channelPricing->setPrice((int) $shop['price'] * 100);
                 $productVariant->addChannelPricing($channelPricing);
             }
         }

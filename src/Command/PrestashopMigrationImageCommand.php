@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Jgrasp\PrestashopMigrationPlugin\Command;
@@ -18,7 +19,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-
 class PrestashopMigrationImageCommand extends Command
 {
     private EntityManagerInterface $entityManager;
@@ -37,22 +37,21 @@ class PrestashopMigrationImageCommand extends Command
     private ImageUploaderInterface $imageUploader;
 
     public function __construct(
-        EntityManagerInterface    $entityManager,
-        RepositoryInterface       $resourceRepository,
+        EntityManagerInterface $entityManager,
+        RepositoryInterface $resourceRepository,
         EntityRepositoryInterface $entityRepository,
-        ImageDownloader           $downloader,
-        FactoryInterface          $productImageFactory,
-        ImageUploaderInterface    $imageUploader
-    )
-    {
+        ImageDownloader $downloader,
+        FactoryInterface $productImageFactory,
+        ImageUploaderInterface $imageUploader
+    ) {
         parent::__construct();
 
-        $this->entityManager = $entityManager;
-        $this->resourceRepository = $resourceRepository;
-        $this->entityRepository = $entityRepository;
-        $this->downloader = $downloader;
+        $this->entityManager       = $entityManager;
+        $this->resourceRepository  = $resourceRepository;
+        $this->entityRepository    = $entityRepository;
+        $this->downloader          = $downloader;
         $this->productImageFactory = $productImageFactory;
-        $this->imageUploader = $imageUploader;
+        $this->imageUploader       = $imageUploader;
     }
 
     public function execute(InputInterface $input, OutputInterface $output)
@@ -76,8 +75,7 @@ class PrestashopMigrationImageCommand extends Command
             $images = $this->entityRepository->getImages($product->getPrestashopId());
 
             foreach ($images as $image) {
-
-                $path = $this->downloader->download((int)$image['id_image']);
+                $path = $this->downloader->download((int) $image['id_image']);
 
                 if (null !== $path) {
                     /** @var ProductImageInterface $productImage */

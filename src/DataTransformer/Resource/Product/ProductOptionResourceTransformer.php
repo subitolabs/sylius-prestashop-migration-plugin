@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Jgrasp\PrestashopMigrationPlugin\DataTransformer\Resource\Product;
@@ -18,7 +19,7 @@ class ProductOptionResourceTransformer implements ResourceTransformerInterface
 
     public function __construct(ResourceTransformerInterface $transformer, LocaleFetcher $localeFetcher)
     {
-        $this->transformer = $transformer;
+        $this->transformer   = $transformer;
         $this->localeFetcher = $localeFetcher;
     }
 
@@ -44,5 +45,4 @@ class ProductOptionResourceTransformer implements ResourceTransformerInterface
 
         return $resource;
     }
-
 }

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Jgrasp\PrestashopMigrationPlugin\Validator\Shipping;
@@ -15,14 +16,12 @@ class ShippingMethodValidator implements ValidatorInterface
 
     public function __construct(ValidatorInterface $validator, EntityRepositoryInterface $carrierRepository)
     {
-        $this->validator = $validator;
+        $this->validator         = $validator;
         $this->carrierRepository = $carrierRepository;
     }
 
     public function validate(ResourceInterface $resource): bool
     {
-        
         return $this->validator->validate($resource);
     }
-
 }

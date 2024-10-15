@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Jgrasp\PrestashopMigrationPlugin\Repository\Currency;
@@ -13,7 +14,7 @@ class CurrencyRepository extends EntityRepository
             ->createQueryBuilder()
             ->select('*')
             ->from($this->getTableShop())
-            ->where('id_shop='.$shopId);
+            ->where('id_shop=' . $shopId);
 
         return $this->getConnection()->executeQuery($query)->fetchAllAssociative();
     }

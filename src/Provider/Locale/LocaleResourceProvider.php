@@ -1,10 +1,10 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Jgrasp\PrestashopMigrationPlugin\Provider\Locale;
 
 use ReflectionClass;
-
 use Jgrasp\PrestashopMigrationPlugin\Attribute\PropertyAttributeAccessor;
 use Jgrasp\PrestashopMigrationPlugin\Model\ModelInterface;
 use Jgrasp\PrestashopMigrationPlugin\Provider\ResourceProviderInterface;
@@ -15,15 +15,15 @@ use Sylius\Component\Resource\Repository\RepositoryInterface;
 class LocaleResourceProvider implements ResourceProviderInterface
 {
     private RepositoryInterface $repository;
-    
+
     private ResourceProviderInterface $provider;
 
     private PropertyAttributeAccessor $propertyAttributeAccessor;
 
     public function __construct(ResourceProviderInterface $provider, RepositoryInterface $repository, PropertyAttributeAccessor $propertyAttributeAccessor)
     {
-        $this->provider = $provider;
-        $this->repository = $repository;
+        $this->provider                  = $provider;
+        $this->repository                = $repository;
         $this->propertyAttributeAccessor = $propertyAttributeAccessor;
     }
 

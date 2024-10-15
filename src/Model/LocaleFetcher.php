@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Jgrasp\PrestashopMigrationPlugin\Model;
@@ -18,9 +19,9 @@ class LocaleFetcher
 
     public function __construct(EntityRepositoryInterface $entityRepository, RepositoryInterface $resourceRepository)
     {
-        $this->entityRepository = $entityRepository;
+        $this->entityRepository   = $entityRepository;
         $this->resourceRepository = $resourceRepository;
-        $this->localeCached = [];
+        $this->localeCached       = [];
     }
 
     /**
@@ -47,10 +48,10 @@ class LocaleFetcher
         $language = $this->entityRepository->find($languageId);
 
         if (empty($language) || !array_key_exists('locale', $language)) {
-            throw new \Exception(sprintf("Lang %s does not exist.", $languageId));
+            throw new \Exception(sprintf('Lang %s does not exist.', $languageId));
         }
 
-        $code = StringInflector::nameToCode($language['locale']);
+        $code   = StringInflector::nameToCode($language['locale']);
         $locale = $this->resourceRepository->findOneBy(['code' => $code]);
 
         $this->localeCached[$languageId] = $locale;

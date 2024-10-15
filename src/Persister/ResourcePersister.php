@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Jgrasp\PrestashopMigrationPlugin\Persister;
@@ -17,9 +18,9 @@ class ResourcePersister implements PersisterInterface
 
     public function __construct(EntityManagerInterface $manager, TransformerInterface $transformer, ValidatorInterface $validator)
     {
-        $this->manager = $manager;
+        $this->manager     = $manager;
         $this->transformer = $transformer;
-        $this->validator = $validator;
+        $this->validator   = $validator;
     }
 
     public function persist(array $data): void
@@ -30,5 +31,4 @@ class ResourcePersister implements PersisterInterface
             $this->manager->persist($resource);
         }
     }
-
 }

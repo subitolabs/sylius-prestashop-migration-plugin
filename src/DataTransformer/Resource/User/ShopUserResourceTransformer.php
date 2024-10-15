@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Jgrasp\PrestashopMigrationPlugin\DataTransformer\Resource\User;
@@ -6,7 +7,6 @@ namespace Jgrasp\PrestashopMigrationPlugin\DataTransformer\Resource\User;
 use Jgrasp\PrestashopMigrationPlugin\DataTransformer\Resource\ResourceTransformerInterface;
 use Jgrasp\PrestashopMigrationPlugin\Model\Customer\CustomerModel;
 use Jgrasp\PrestashopMigrationPlugin\Model\ModelInterface;
-
 use Sylius\Component\Customer\Model\CustomerInterface;
 use Sylius\Component\Resource\Factory\FactoryInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
@@ -44,11 +44,10 @@ class ShopUserResourceTransformer implements ResourceTransformerInterface
         $shopUser->setEnabled($model->enabled);
 
         $gender = match ($model->gender) {
-            1 => CustomerInterface::MALE_GENDER,
-            2 => CustomerInterface::FEMALE_GENDER,
+            1       => CustomerInterface::MALE_GENDER,
+            2       => CustomerInterface::FEMALE_GENDER,
             default => CustomerInterface::UNKNOWN_GENDER,
         };
-
 
         $customer->setGender($gender);
         $customer->setUser($shopUser);
@@ -57,8 +56,6 @@ class ShopUserResourceTransformer implements ResourceTransformerInterface
             $customer->setBirthday(\DateTime::createFromFormat('Y-m-d', $model->birthday));
         }
 
-
         return $customer;
     }
-
 }

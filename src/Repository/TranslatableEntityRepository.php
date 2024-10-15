@@ -6,7 +6,7 @@ use Doctrine\DBAL\Query\QueryBuilder;
 
 abstract class TranslatableEntityRepository extends EntityRepository
 {
-    const LANGUAGE_IDENTIFIER = 'id_lang';
+    public const LANGUAGE_IDENTIFIER = 'id_lang';
 
     public function find(int $prestashopId): array
     {
@@ -17,7 +17,7 @@ abstract class TranslatableEntityRepository extends EntityRepository
 
         $query = $this->applyTranslatableTable($query);
 
-        $query->where($this->getTableAlias().'.'.$this->getPrimaryKey().'='.$prestashopId);
+        $query->where($this->getTableAlias() . '.' . $this->getPrimaryKey() . '=' . $prestashopId);
 
         return $this->fetchAllAssociative($query);
     }
@@ -28,7 +28,6 @@ abstract class TranslatableEntityRepository extends EntityRepository
             ->createQueryBuilder()
             ->select('*')
             ->from($this->getTable());
-
 
         $query = $this->applyTranslatableTable($query, $langId);
 
@@ -55,7 +54,6 @@ abstract class TranslatableEntityRepository extends EntityRepository
 
         return $query
             ->join($this->getTable(), $this->getTableLang(), $this->getTableLangAlias(), implode(' AND ', $conditions));
-
     }
 
     private function getLangCondition(int $langId): string

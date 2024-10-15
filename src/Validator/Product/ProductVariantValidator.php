@@ -1,11 +1,11 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Jgrasp\PrestashopMigrationPlugin\Validator\Product;
 
 use Jgrasp\PrestashopMigrationPlugin\Entity\Product\ProductVariantInterface;
 use Jgrasp\PrestashopMigrationPlugin\Validator\ValidatorInterface;
-
 use Sylius\Component\Resource\Model\ResourceInterface;
 
 class ProductVariantValidator implements ValidatorInterface

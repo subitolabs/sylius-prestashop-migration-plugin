@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Jgrasp\PrestashopMigrationPlugin\DataTransformer\Resource\AdminUser;
@@ -22,8 +23,8 @@ class AdminUserResourceTransformer implements ResourceTransformerInterface
 
     public function __construct(ResourceTransformerInterface $transformer, PasswordUpdaterInterface $passwordUpdater, RepositoryInterface $localeRepository)
     {
-        $this->transformer = $transformer;
-        $this->passwordUpdater = $passwordUpdater;
+        $this->transformer      = $transformer;
+        $this->passwordUpdater  = $passwordUpdater;
         $this->localeRepository = $localeRepository;
     }
 
@@ -48,5 +49,4 @@ class AdminUserResourceTransformer implements ResourceTransformerInterface
 
         return $adminUser;
     }
-
 }

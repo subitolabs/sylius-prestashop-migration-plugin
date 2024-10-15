@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Jgrasp\PrestashopMigrationPlugin\DataTransformer\Resource\Product;
@@ -48,25 +49,24 @@ class ProductVariantResourceTransformer implements ResourceTransformerInterface
 
     public function __construct(
         ResourceTransformerInterface $transformer,
-        RepositoryInterface          $productRepository,
-        RepositoryInterface          $productOptionValueRepository,
-        EntityRepositoryInterface    $productEntityRepository,
-        EntityRepositoryInterface    $productAttributeRepository,
-        EntityRepositoryInterface    $stockAvailableRepository,
-        FactoryInterface             $channelPricingFactory,
-        LocaleFetcher                $localeFetcher,
-        ConfigurationResolver        $configurationResolver
-    )
-    {
-        $this->transformer = $transformer;
-        $this->productRepository = $productRepository;
+        RepositoryInterface $productRepository,
+        RepositoryInterface $productOptionValueRepository,
+        EntityRepositoryInterface $productEntityRepository,
+        EntityRepositoryInterface $productAttributeRepository,
+        EntityRepositoryInterface $stockAvailableRepository,
+        FactoryInterface $channelPricingFactory,
+        LocaleFetcher $localeFetcher,
+        ConfigurationResolver $configurationResolver
+    ) {
+        $this->transformer                  = $transformer;
+        $this->productRepository            = $productRepository;
         $this->productOptionValueRepository = $productOptionValueRepository;
-        $this->productEntityRepository = $productEntityRepository;
-        $this->productAttributeRepository = $productAttributeRepository;
-        $this->stockAvailableRepository = $stockAvailableRepository;
-        $this->channelPricingFactory = $channelPricingFactory;
-        $this->localeFetcher = $localeFetcher;
-        $this->configurationResolver = $configurationResolver;
+        $this->productEntityRepository      = $productEntityRepository;
+        $this->productAttributeRepository   = $productAttributeRepository;
+        $this->stockAvailableRepository     = $stockAvailableRepository;
+        $this->channelPricingFactory        = $channelPricingFactory;
+        $this->localeFetcher                = $localeFetcher;
+        $this->configurationResolver        = $configurationResolver;
     }
 
     /**
@@ -86,7 +86,7 @@ class ProductVariantResourceTransformer implements ResourceTransformerInterface
             return $resource;
         }
 
-        $code = $product->getCode().'_'.$resource->getPrestashopId();
+        $code = $product->getCode() . '_' . $resource->getPrestashopId();
 
         $resource->setCode(StringInflector::nameToCode($code));
 
@@ -94,7 +94,7 @@ class ProductVariantResourceTransformer implements ResourceTransformerInterface
         $attributes = $this->productAttributeRepository->getAttributes($model->id);
 
         foreach ($attributes as $attribute) {
-            $attributeId = (int)$attribute['id_attribute'];
+            $attributeId = (int) $attribute['id_attribute'];
 
             $productOptionValue = $this->productOptionValueRepository->findOneBy(['prestashopId' => $attributeId]);
 
@@ -118,8 +118,7 @@ class ProductVariantResourceTransformer implements ResourceTransformerInterface
             }
 
             $defaultPrice = $this->productEntityRepository->getPriceByShopId($product->getPrestashopId(), $channel->getPrestashopId());
-            $price = (int)(($defaultPrice + $model->price) * 100);
-
+            $price        = (int) (($defaultPrice + $model->price) * 100);
 
             $channelPricing->setPrice($price);
             $resource->addChannelPricing($channelPricing);
@@ -139,5 +138,4 @@ class ProductVariantResourceTransformer implements ResourceTransformerInterface
 
         return $resource;
     }
-
 }

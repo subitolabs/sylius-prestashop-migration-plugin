@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Jgrasp\PrestashopMigrationPlugin\DataTransformer\Resource\Address;
@@ -22,13 +23,12 @@ class AddressResourceTransformer implements ResourceTransformerInterface
 
     public function __construct(
         ResourceTransformerInterface $transformer,
-        CustomerRepositoryInterface  $customerRepository,
-        RepositoryInterface          $countryRepository
-    )
-    {
-        $this->transformer = $transformer;
+        CustomerRepositoryInterface $customerRepository,
+        RepositoryInterface $countryRepository
+    ) {
+        $this->transformer        = $transformer;
         $this->customerRepository = $customerRepository;
-        $this->countryRepository = $countryRepository;
+        $this->countryRepository  = $countryRepository;
     }
 
     /**
@@ -49,7 +49,7 @@ class AddressResourceTransformer implements ResourceTransformerInterface
         $country = $this->countryRepository->findOneBy(['prestashopId' => $model->countryId]);
 
         if (null !== $model->address2) {
-            $address->setStreet($address->getStreet().', '.$model->address2);
+            $address->setStreet($address->getStreet() . ', ' . $model->address2);
         }
 
         $address->setCountryCode($country->getCode());
@@ -65,5 +65,4 @@ class AddressResourceTransformer implements ResourceTransformerInterface
 
         return $address;
     }
-
 }

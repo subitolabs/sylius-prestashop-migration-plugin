@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Jgrasp\PrestashopMigrationPlugin\DataTransformer;
@@ -15,7 +16,7 @@ final class PrestashopTransformer implements TransformerInterface
 
     public function __construct(ModelTransformerInterface $modelTransformer, ResourceTransformerInterface $resourceTransformer)
     {
-        $this->modelTransformer = $modelTransformer;
+        $this->modelTransformer    = $modelTransformer;
         $this->resourceTransformer = $resourceTransformer;
     }
 

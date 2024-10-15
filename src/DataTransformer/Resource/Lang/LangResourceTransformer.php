@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Jgrasp\PrestashopMigrationPlugin\DataTransformer\Resource\Lang;
@@ -28,5 +29,4 @@ class LangResourceTransformer implements ResourceTransformerInterface
 
         return $locale;
     }
-
 }

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Jgrasp\PrestashopMigrationPlugin\Provider;
@@ -23,21 +24,21 @@ final class ResourceProvider implements ResourceProviderInterface
 
     public function __construct(RepositoryInterface $repository, FactoryInterface $factory, PropertyAttributeAccessor $propertyAttributeAccessor)
     {
-        $this->repository = $repository;
-        $this->factory = $factory;
+        $this->repository                = $repository;
+        $this->factory                   = $factory;
         $this->propertyAttributeAccessor = $propertyAttributeAccessor;
     }
 
     public function getResource(ModelInterface $model): ResourceInterface
     {
         $reflection = new ReflectionClass($this->repository->getClassName());
-        $traits = $reflection->getTraitNames();
+        $traits     = $reflection->getTraitNames();
 
         if (in_array(PrestashopTrait::class, $traits) === false) {
-            throw new Exception(sprintf("Entity %s should implement an instance of Trait %s", $this->repository->getClassName(), PrestashopTrait::class));
+            throw new Exception(sprintf('Entity %s should implement an instance of Trait %s', $this->repository->getClassName(), PrestashopTrait::class));
         }
 
-        $prestashopId = null;
+        $prestashopId    = null;
         $modelReflection = new ReflectionClass($model);
         $modelProperties = $modelReflection->getProperties();
 

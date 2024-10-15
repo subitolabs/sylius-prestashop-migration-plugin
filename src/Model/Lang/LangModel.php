@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Jgrasp\PrestashopMigrationPlugin\Model\Lang;
@@ -13,5 +14,4 @@ class LangModel implements ModelInterface
 
     #[Field(source: 'locale', target: 'code')]
     public string $code;
-
 }

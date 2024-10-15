@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Jgrasp\PrestashopMigrationPlugin\DataTransformer\Model\Channel;
@@ -16,7 +17,7 @@ class ChannelModelTransformer implements ModelTransformerInterface
 
     public function __construct(ModelTransformerInterface $transformer, EntityRepositoryInterface $currencyRepository)
     {
-        $this->transformer = $transformer;
+        $this->transformer        = $transformer;
         $this->currencyRepository = $currencyRepository;
     }
 
@@ -27,10 +28,9 @@ class ChannelModelTransformer implements ModelTransformerInterface
          */
         $model = $this->transformer->transform($data);
 
-        $shopCurrencies = $this->currencyRepository->getCurrencyIdByShopId($model->id);
-        $model->currencies = array_map(static fn($currencyId) => (int)$currencyId, array_column($shopCurrencies, 'id_currency'));
+        $shopCurrencies    = $this->currencyRepository->getCurrencyIdByShopId($model->id);
+        $model->currencies = array_map(static fn($currencyId) => (int) $currencyId, array_column($shopCurrencies, 'id_currency'));
 
         return $model;
     }
-
 }

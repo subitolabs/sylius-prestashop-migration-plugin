@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Jgrasp\PrestashopMigrationPlugin\DataTransformer\Resource\Taxon;
@@ -15,7 +16,6 @@ use Sylius\Component\Resource\Model\ResourceInterface;
 use Sylius\Component\Taxonomy\Generator\TaxonSlugGeneratorInterface;
 use Sylius\Component\Taxonomy\Repository\TaxonRepositoryInterface;
 
-
 final class TaxonResourceTransformer implements ResourceTransformerInterface
 {
     private ResourceTransformerInterface $transformer;
@@ -28,15 +28,14 @@ final class TaxonResourceTransformer implements ResourceTransformerInterface
 
     public function __construct(
         ResourceTransformerInterface $transformer,
-        TaxonSlugGeneratorInterface  $taxonSlugGenerator,
-        TaxonRepositoryInterface     $taxonRepository,
-        LocaleFetcher                $localeFetcher
-    )
-    {
-        $this->transformer = $transformer;
+        TaxonSlugGeneratorInterface $taxonSlugGenerator,
+        TaxonRepositoryInterface $taxonRepository,
+        LocaleFetcher $localeFetcher
+    ) {
+        $this->transformer        = $transformer;
         $this->taxonSlugGenerator = $taxonSlugGenerator;
-        $this->taxonRepository = $taxonRepository;
-        $this->localeFetcher = $localeFetcher;
+        $this->taxonRepository    = $taxonRepository;
+        $this->localeFetcher      = $localeFetcher;
     }
 
     public function transform(ModelInterface $model): ResourceInterface

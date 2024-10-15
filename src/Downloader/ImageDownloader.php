@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Jgrasp\PrestashopMigrationPlugin\Downloader;
@@ -14,7 +15,7 @@ class ImageDownloader
     public function __construct(string $publicDirectory, string $tmpDirectory)
     {
         $this->publicDirectory = $publicDirectory;
-        $this->tmpDirectory = $tmpDirectory;
+        $this->tmpDirectory    = $tmpDirectory;
     }
 
     public function download(int $imageId): ?string
@@ -44,13 +45,13 @@ class ImageDownloader
 
     private function getImageDirectory(int $imageId): string
     {
-        $directory = implode('/', str_split((string)$imageId));
+        $directory = implode('/', str_split((string) $imageId));
 
         return sprintf('%s/%s.%s', $directory, $imageId, 'jpg');
     }
 
     private function getTmpPath(int $imageId): string
     {
-        return $this->tmpDirectory.$imageId;
+        return $this->tmpDirectory . $imageId;
     }
 }

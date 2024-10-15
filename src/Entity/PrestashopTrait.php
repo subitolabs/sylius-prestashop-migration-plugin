@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Jgrasp\PrestashopMigrationPlugin\Entity;
@@ -11,19 +12,19 @@ trait PrestashopTrait
     /**
      * @ORM\Column(name="prestashop_id", type="integer", nullable=true)
      */
-    #[ORM\Column(name: "prestashop_id", type: "integer", nullable: true)]
+    #[ORM\Column(name: 'prestashop_id', type: 'integer', nullable: true)]
     protected ?int $prestashopId = null;
 
     /**
      * @ORM\Column(name="prestashop_created_at", type="datetime", nullable=true)
      */
-    #[ORM\Column(name: "prestashop_created_at", type: "datetime", nullable: true)]
+    #[ORM\Column(name: 'prestashop_created_at', type: 'datetime', nullable: true)]
     protected ?DateTime $prestashopCreatedAt;
 
     /**
      * @ORM\Column(name="prestashop_updated_at", type="datetime", nullable=true)
      */
-    #[ORM\Column(name: "prestashop_updated_at", type: "datetime", nullable: true)]
+    #[ORM\Column(name: 'prestashop_updated_at', type: 'datetime', nullable: true)]
     protected ?DateTime $prestashopUpdatedAt;
 
     public function getPrestashopId(): ?int

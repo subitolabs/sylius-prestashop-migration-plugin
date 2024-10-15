@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Jgrasp\PrestashopMigrationPlugin\Command;
@@ -27,7 +28,7 @@ class ConfigurationCommand extends Command
         $io = new SymfonyStyle($input, $output);
 
         if ($input->getOption('no-interaction') === false) {
-            $helper = $this->getHelper('question');
+            $helper   = $this->getHelper('question');
             $question = new ConfirmationQuestion('Are you sure you want to automatically configure the store ? This can have serious repercussions on a production site. (N/y) ', false);
 
             if (!$helper->ask($input, $output, $question)) {
@@ -38,7 +39,6 @@ class ConfigurationCommand extends Command
         }
 
         foreach ($this->configurators as $configurator) {
-
             $io->title(sprintf('Start configuration of "%s"', $configurator->getName()));
 
             $configurator->execute();

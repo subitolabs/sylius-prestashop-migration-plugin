@@ -2,7 +2,6 @@
 
 namespace Jgrasp\PrestashopMigrationPlugin\Repository;
 
-
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Query\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
@@ -19,10 +18,10 @@ class EntityRepository implements EntityRepositoryInterface
 
     public function __construct(string $_entity, string $_prefix, string $_primaryKey, Connection $connection)
     {
-        $this->_entity = $_entity;
-        $this->_prefix = $_prefix;
+        $this->_entity     = $_entity;
+        $this->_prefix     = $_prefix;
         $this->_primaryKey = $_primaryKey;
-        $this->connection = $connection;
+        $this->connection  = $connection;
     }
 
     public function find(int $id): array
@@ -74,8 +73,7 @@ class EntityRepository implements EntityRepositoryInterface
             ->select(sprintf('COUNT(%s)', $this->getPrimaryKey()))
             ->from($this->getTable());
 
-        return (int)$this->connection->executeQuery($query)->fetchOne();
-
+        return (int) $this->connection->executeQuery($query)->fetchOne();
     }
 
     public function getPrimaryKey(): string
@@ -90,7 +88,7 @@ class EntityRepository implements EntityRepositoryInterface
 
     protected function getTable(): string
     {
-        return $this->_prefix.$this->_entity;
+        return $this->_prefix . $this->_entity;
     }
 
     protected function getTableAlias(): string

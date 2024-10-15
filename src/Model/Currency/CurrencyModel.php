@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Jgrasp\PrestashopMigrationPlugin\Model\Currency;
@@ -13,5 +14,4 @@ class CurrencyModel implements ModelInterface
 
     #[Field(source: 'iso_code', target: 'code')]
     public string $code;
-
 }

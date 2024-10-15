@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Jgrasp\PrestashopMigrationPlugin\DependencyInjection;
@@ -35,16 +36,16 @@ final class PrestashopMigrationExtension extends Extension
     {
         $container->registerForAutoconfiguration(ConfiguratorInterface::class)->addTag('prestashop.configurator');
 
-        $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.xml');
 
         $configuration = $this->getConfiguration($configs, $container);
-        $config = $this->processConfiguration($configuration, $configs);
+        $config        = $this->processConfiguration($configuration, $configs);
 
-        $resources = $config['resources'];
-        $prefix = $config['prefix'];
+        $resources       = $config['resources'];
+        $prefix          = $config['prefix'];
         $publicDirectory = $config['public_directory'];
-        $flushStep = $config['flush_step'];
+        $flushStep       = $config['flush_step'];
 
         if (null === $publicDirectory) {
             throw new InvalidConfigurationException('The configuration for "public_directory" is not defined. Please insert a value (ex : "https://www.example.com/img/p/")');
@@ -72,7 +73,7 @@ final class PrestashopMigrationExtension extends Extension
     private function createRepositoryDefinition(string $prefix, string $resource, array $configuration, ContainerBuilder $container): void
     {
         $repository = $configuration['repository'];
-        $table = $configuration['table'];
+        $table      = $configuration['table'];
         $primaryKey = $configuration['primary_key'];
 
         $definitionId = $this->getDefinitionRepositoryId($table);
@@ -97,7 +98,7 @@ final class PrestashopMigrationExtension extends Extension
 
     private function createCollectorDefinition(array $configuration, ContainerBuilder $container): void
     {
-        $table = $configuration['table'];
+        $table        = $configuration['table'];
         $translatable = $configuration['use_translation'] ?? false;
 
         $definitionId = $this->getDefinitionCollectorId($table);
@@ -118,7 +119,7 @@ final class PrestashopMigrationExtension extends Extension
     {
         $definitionId = $this->getDefinitionMapperId($configuration['sylius']);
 
-        $model = $configuration['model'];
+        $model           = $configuration['model'];
         $reflectionClass = new ReflectionClass($model);
 
         if (!$reflectionClass->implementsInterface(ModelInterface::class)) {
@@ -152,12 +153,12 @@ final class PrestashopMigrationExtension extends Extension
     private function createDataTransformerDefinition(array $configuration, ContainerBuilder $container): void
     {
         $entity = $configuration['sylius'];
-        $table = $configuration['table'];
+        $table  = $configuration['table'];
 
-        $modelTransformerId = $this->getDefinitionDataTransformerId($entity, 'model');
+        $modelTransformerId    = $this->getDefinitionDataTransformerId($entity, 'model');
         $resourceTransformerId = $this->getDefinitionDataTransformerId($entity, 'resource');
-        $mapperId = $this->getDefinitionMapperId($entity);
-        $providerId = $this->getDefinitionProviderId($entity);
+        $mapperId              = $this->getDefinitionMapperId($entity);
+        $providerId            = $this->getDefinitionProviderId($entity);
 
         //MODEL
         $definition = new Definition(ModelTransformer::class, [new Reference($mapperId)]);
@@ -179,7 +180,7 @@ final class PrestashopMigrationExtension extends Extension
         //PRESTASHOP
         $arguments = [
             new Reference($modelTransformerId),
-            new Reference($resourceTransformerId)
+            new Reference($resourceTransformerId),
         ];
 
         $definition = new Definition(PrestashopTransformer::class, $arguments);
@@ -191,7 +192,7 @@ final class PrestashopMigrationExtension extends Extension
     private function createImporterDefinition(array $configuration, ContainerBuilder $container): void
     {
         $entity = $configuration['sylius'];
-        $table = $configuration['table'];
+        $table  = $configuration['table'];
 
         $definitionId = $this->getDefinitionImporterId($entity);
 
@@ -201,7 +202,7 @@ final class PrestashopMigrationExtension extends Extension
             new Reference($this->getDefinitionCollectorId($table)),
             new Reference($this->getDefinitionPersisterId($entity)),
             new Reference('doctrine.orm.entity_manager'),
-            new Reference(ViolationBagInterface::class)
+            new Reference(ViolationBagInterface::class),
         ];
 
         $definition = new Definition(ResourceImporter::class, $arguments);
@@ -214,7 +215,7 @@ final class PrestashopMigrationExtension extends Extension
 
     private function createPersisterDefinition(array $configuration, ContainerBuilder $container): void
     {
-        $entity = $configuration['sylius'];
+        $entity       = $configuration['sylius'];
         $definitionId = $this->getDefinitionPersisterId($entity);
 
         $arguments = [
@@ -232,7 +233,7 @@ final class PrestashopMigrationExtension extends Extension
 
     private function createCommandDefinition(array $configuration, ContainerBuilder $container): void
     {
-        $entity = $configuration['sylius'];
+        $entity       = $configuration['sylius'];
         $definitionId = $this->getDefinitionCommandId($entity);
 
         $arguments = [
@@ -251,7 +252,7 @@ final class PrestashopMigrationExtension extends Extension
 
     private function createValidatorDefinition(array $configuration, ContainerBuilder $container): void
     {
-        $entity = $configuration['sylius'];
+        $entity       = $configuration['sylius'];
         $definitionId = $this->getDefinitionValidatorId($entity);
 
         $arguments = [
@@ -310,7 +311,7 @@ final class PrestashopMigrationExtension extends Extension
         $definition = 'data_transformer';
 
         if (null !== $type) {
-            $definition = sprintf($definition.'.%s', $type);
+            $definition = sprintf($definition . '.%s', $type);
         }
 
         return $this->getDefinitionId($definition, $resource);
@@ -320,5 +321,4 @@ final class PrestashopMigrationExtension extends Extension
     {
         return sprintf('prestashop.%s.%s', $definition, $resource);
     }
-
 }
