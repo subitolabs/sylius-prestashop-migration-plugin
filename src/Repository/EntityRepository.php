@@ -65,9 +65,6 @@ class EntityRepository implements EntityRepositoryInterface
             }
         }
 
-        // if ($this->getTable() === 'psds17_product_attribute' || $this->getTable() === 'psds17_product')
-        // $query = $query->where($query->expr()->eq($this->getTable() . ".id_product", $query->expr()->literal('33981')));
-
         if (null !== $limit && null !== $offset) {
             $query
                 ->setMaxResults($limit)
