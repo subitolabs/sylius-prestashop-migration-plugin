@@ -27,8 +27,16 @@ class ResourcePersister implements PersisterInterface
     {
         $resource = $this->transformer->transform($data);
 
-        if ($this->validator->validate($resource)) {
-            $this->manager->persist($resource);
+        if (empty($resource)) {
+            return ;
+        }
+
+        $resources = is_array($resource) ? $resource : [$resource];
+
+        foreach ($resources as $resource) {
+            if ($this->validator->validate($resource)) {
+                $this->manager->persist($resource);
+            }
         }
     }
 }

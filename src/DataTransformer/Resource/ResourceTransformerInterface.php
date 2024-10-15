@@ -9,5 +9,5 @@ use Sylius\Component\Resource\Model\ResourceInterface;
 
 interface ResourceTransformerInterface
 {
-    public function transform(ModelInterface $model): ResourceInterface;
+    public function transform(ModelInterface $model): array | ResourceInterface | null;
 }

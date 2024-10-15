@@ -20,7 +20,7 @@ final class PrestashopTransformer implements TransformerInterface
         $this->resourceTransformer = $resourceTransformer;
     }
 
-    public function transform($data): ResourceInterface
+    public function transform($data): array | ResourceInterface | null
     {
         $model = $this->modelTransformer->transform($data);
 
