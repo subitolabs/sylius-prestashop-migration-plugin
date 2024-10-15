@@ -1,0 +1,15 @@
+parameters:
+    level: 8
+    paths:
+        - %rootDir%/src/
+
+    excludePaths:
+        # Makes PHPStan crash
+        - 'src/DependencyInjection/SyliusBetterAdminExtension.php'
+
+        # Test dependencies
+        - 'tests/Application/**/*'
+
+    ignoreErrors:
+        # - identifier: missingType.generics
+        - identifier: missingType.iterableValue

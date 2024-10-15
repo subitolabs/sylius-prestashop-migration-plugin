@@ -17,14 +17,31 @@
     {
       "name": "Quentin Briais",
       "email": "briaisq@hotmail.fr"
+    },
+    {
+      "name": "Thomas Decaux",
+      "email": "ebuildy@gmail.com"
     }
   ],
   "require": {
     "php": "^8.0",
     "sylius/sylius": "^1.10"
-
   },
-  "require-dev": {
-
+  "require-dev": {},
+  "scripts": {
+    "phpcs": "PHP_CS_FIXER_IGNORE_ENV=1 .tools/vendor/bin/php-cs-fixer fix src --using-cache=no",
+    "phpstan": ".tools/vendor/bin/phpstan analyse -c phpstan.neon src/",
+    "phpmd": ".tools/vendor/bin/phpmd --exclude Migrations/* src/ ansi phpmd.xml",
+    "phpunit": ".tools/vendor/bin/phpunit",
+    "phpspec": ".tools/vendor/bin/phpspec run"
+  },
+  "config": {
+    "allow-plugins": {
+      "symfony/thanks": true,
+      "symfony/flex": true,
+      "dealerdirect/phpcodesniffer-composer-installer": true,
+      "ergebnis/composer-normalize": true,
+      "php-http/discovery": true
+    }
   }
 }
