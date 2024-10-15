@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Jgrasp\PrestashopMigrationPlugin\Repository\Customer;
@@ -32,6 +33,6 @@ class CustomerRepository extends EntityRepository
             ->from($this->getTable())
             ->where($query->expr()->neq('is_guest', true));
 
-        return (int)$this->getConnection()->executeQuery($query)->fetchOne();
+        return (int) $this->getConnection()->executeQuery($query)->fetchOne();
     }
 }

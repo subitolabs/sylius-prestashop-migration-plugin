@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Jgrasp\PrestashopMigrationPlugin\Command;
@@ -43,7 +44,7 @@ final class PrestashopMigrationCommand extends Command
         $force = $input->getOption('force');
 
         if ($force) {
-            $helper = $this->getHelper('question');
+            $helper   = $this->getHelper('question');
             $question = new ConfirmationQuestion('The database will be erase before the migration. Are you sure you want continue ? (N/y) ', false);
 
             if (!$helper->ask($input, $output, $question)) {

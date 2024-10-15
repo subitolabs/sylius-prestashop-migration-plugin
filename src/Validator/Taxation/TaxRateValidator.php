@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Jgrasp\PrestashopMigrationPlugin\Validator\Taxation;
@@ -25,5 +26,4 @@ class TaxRateValidator implements ValidatorInterface
     {
         return null !== $resource->getZone() && $this->validator->validate($resource);
     }
-
 }

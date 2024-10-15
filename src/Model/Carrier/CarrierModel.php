@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Jgrasp\PrestashopMigrationPlugin\Model\Carrier;
@@ -16,5 +17,4 @@ class CarrierModel implements ModelInterface
 
     #[Field(source: 'delay', target: 'description', translatable: true)]
     public array $description;
-
 }

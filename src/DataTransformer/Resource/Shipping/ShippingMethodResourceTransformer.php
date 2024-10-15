@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Jgrasp\PrestashopMigrationPlugin\DataTransformer\Resource\Shipping;
@@ -37,19 +38,18 @@ class ShippingMethodResourceTransformer implements ResourceTransformerInterface
 
     public function __construct(
         ResourceTransformerInterface $transformer,
-        RepositoryInterface          $shippingMethodRepository,
-        RepositoryInterface          $channelRepository,
-        RepositoryInterface          $zoneRepository,
-        EntityRepositoryInterface    $carrierRepository,
-        LocaleFetcher                $fetcher
-    )
-    {
-        $this->transformer = $transformer;
+        RepositoryInterface $shippingMethodRepository,
+        RepositoryInterface $channelRepository,
+        RepositoryInterface $zoneRepository,
+        EntityRepositoryInterface $carrierRepository,
+        LocaleFetcher $fetcher
+    ) {
+        $this->transformer              = $transformer;
         $this->shippingMethodRepository = $shippingMethodRepository;
-        $this->channelRepository = $channelRepository;
-        $this->zoneRepository = $zoneRepository;
-        $this->carrierRepository = $carrierRepository;
-        $this->fetcher = $fetcher;
+        $this->channelRepository        = $channelRepository;
+        $this->zoneRepository           = $zoneRepository;
+        $this->carrierRepository        = $carrierRepository;
+        $this->fetcher                  = $fetcher;
     }
 
     /**
@@ -71,7 +71,7 @@ class ShippingMethodResourceTransformer implements ResourceTransformerInterface
         }
 
         $resource->setCalculator(DefaultCalculators::FLAT_RATE);
-        $resource->setCode(StringInflector::nameToLowercaseCode(Transliterator::transliterate($resource->getName().'_'.$resource->getPrestashopId())));
+        $resource->setCode(StringInflector::nameToLowercaseCode(Transliterator::transliterate($resource->getName() . '_' . $resource->getPrestashopId())));
 
         //@TODO Create one shipping method by zone
         $this->addChannels($resource);
@@ -85,8 +85,8 @@ class ShippingMethodResourceTransformer implements ResourceTransformerInterface
         $carrierZones = $this->carrierRepository->getZones($resource->getPrestashopId());
 
         foreach ($carrierZones as $carrierZone) {
-            $zoneId = (int)$carrierZone['id_zone'];
-            $zone = $this->zoneRepository->findOneBy(['prestashopId' => $zoneId]);
+            $zoneId = (int) $carrierZone['id_zone'];
+            $zone   = $this->zoneRepository->findOneBy(['prestashopId' => $zoneId]);
 
             if ($zone instanceof ZoneInterface) {
                 $resource->setZone($zone);
@@ -100,7 +100,7 @@ class ShippingMethodResourceTransformer implements ResourceTransformerInterface
         $shops = $this->carrierRepository->getShops($resource->getPrestashopId());
 
         foreach ($shops as $shop) {
-            $shopId = (int)$shop['id_shop'];
+            $shopId = (int) $shop['id_shop'];
 
             $channel = $this->channelRepository->findOneBy(['prestashopId' => $shopId]);
 

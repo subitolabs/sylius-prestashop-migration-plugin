@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Jgrasp\PrestashopMigrationPlugin\DataTransformer\Resource\Taxation;
@@ -35,19 +36,18 @@ class TaxRateResourceTransformer implements ResourceTransformerInterface
 
     public function __construct(
         ResourceTransformerInterface $transformer,
-        RepositoryInterface          $taxCategoryRepository,
-        RepositoryInterface          $zoneMemberRepository,
-        FactoryInterface             $taxCategoryFactory,
-        EntityManagerInterface       $entityManager,
-        LocaleContextInterface       $localeContext
-    )
-    {
-        $this->transformer = $transformer;
+        RepositoryInterface $taxCategoryRepository,
+        RepositoryInterface $zoneMemberRepository,
+        FactoryInterface $taxCategoryFactory,
+        EntityManagerInterface $entityManager,
+        LocaleContextInterface $localeContext
+    ) {
+        $this->transformer           = $transformer;
         $this->taxCategoryRepository = $taxCategoryRepository;
-        $this->zoneMemberRepository = $zoneMemberRepository;
-        $this->taxCategoryFactory = $taxCategoryFactory;
-        $this->entityManager = $entityManager;
-        $this->localeContext = $localeContext;
+        $this->zoneMemberRepository  = $zoneMemberRepository;
+        $this->taxCategoryFactory    = $taxCategoryFactory;
+        $this->entityManager         = $entityManager;
+        $this->localeContext         = $localeContext;
     }
 
     /**
@@ -84,7 +84,7 @@ class TaxRateResourceTransformer implements ResourceTransformerInterface
         $taxCategory->setCode($resource->getCode());
         $taxCategory->setName($resource->getName());
 
-        if($resource->getName()) {
+        if ($resource->getName()) {
             $this->entityManager->persist($taxCategory);
             $this->entityManager->flush();
         }

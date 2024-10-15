@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Jgrasp\PrestashopMigrationPlugin\DataTransformer\Resource\Taxation;
@@ -18,7 +19,7 @@ class TaxCategoryResourceTransformer implements ResourceTransformerInterface
 
     public function __construct(ResourceTransformerInterface $transformer, LocaleContextInterface $localeContext)
     {
-        $this->transformer = $transformer;
+        $this->transformer   = $transformer;
         $this->localeContext = $localeContext;
     }
 
@@ -31,5 +32,4 @@ class TaxCategoryResourceTransformer implements ResourceTransformerInterface
 
         return $resource;
     }
-
 }

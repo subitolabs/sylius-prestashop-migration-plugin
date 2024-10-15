@@ -1,11 +1,11 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Jgrasp\PrestashopMigrationPlugin\Importer;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Jgrasp\PrestashopMigrationPlugin\DataCollector\DataCollectorInterface;
-
 use Jgrasp\PrestashopMigrationPlugin\Persister\PersisterInterface;
 use Jgrasp\PrestashopMigrationPlugin\Validator\ViolationBagInterface;
 
@@ -24,20 +24,19 @@ class ResourceImporter implements ImporterInterface
     private ViolationBagInterface $violationBag;
 
     public function __construct(
-        string                 $name,
-        int                    $step,
+        string $name,
+        int $step,
         DataCollectorInterface $collector,
-        PersisterInterface     $persister,
+        PersisterInterface $persister,
         EntityManagerInterface $entityManager,
         ViolationBagInterface $violationBag
-    )
-    {
-        $this->name = $name;
-        $this->step = $step;
-        $this->collector = $collector;
-        $this->persister = $persister;
+    ) {
+        $this->name          = $name;
+        $this->step          = $step;
+        $this->collector     = $collector;
+        $this->persister     = $persister;
         $this->entityManager = $entityManager;
-        $this->violationBag = $violationBag;
+        $this->violationBag  = $violationBag;
     }
 
     public function import(callable $callable = null): void
@@ -45,7 +44,6 @@ class ResourceImporter implements ImporterInterface
         $offset = 0;
 
         while ($offset < $this->size()) {
-
             $collection = $this->collector->collect($this->step, $offset);
 
             foreach ($collection as $item) {

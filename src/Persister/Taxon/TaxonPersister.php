@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Jgrasp\PrestashopMigrationPlugin\Persister\Taxon;
@@ -15,7 +16,7 @@ class TaxonPersister implements PersisterInterface
     public function __construct(PersisterInterface $persister, EntityManagerInterface $manager)
     {
         $this->persister = $persister;
-        $this->manager = $manager;
+        $this->manager   = $manager;
     }
 
     public function persist(array $data): void

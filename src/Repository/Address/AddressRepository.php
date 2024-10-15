@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Jgrasp\PrestashopMigrationPlugin\Repository\Address;
@@ -32,6 +33,6 @@ class AddressRepository extends EntityRepository implements AddressEntityReposit
             ->from($this->getTable())
             ->where($query->expr()->neq('id_customer', 0));
 
-        return (int)$this->getConnection()->executeQuery($query)->fetchOne();
+        return (int) $this->getConnection()->executeQuery($query)->fetchOne();
     }
 }

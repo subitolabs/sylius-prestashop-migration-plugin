@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Jgrasp\PrestashopMigrationPlugin\DataCollector\Address;
@@ -24,5 +25,4 @@ class AddressCollector implements DataCollectorInterface
     {
         return $this->repository->countCustomerAddresses();
     }
-
 }

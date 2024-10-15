@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Jgrasp\PrestashopMigrationPlugin\Model\Product;
@@ -11,7 +12,9 @@ use Jgrasp\PrestashopMigrationPlugin\Model\UrlModelTrait;
 
 class ProductModel implements ModelInterface
 {
-    use TranslationModelTrait, UrlModelTrait, ToggleableTrait;
+    use TranslationModelTrait;
+    use UrlModelTrait;
+    use ToggleableTrait;
 
     #[Field(source: 'id_product', target: 'prestashopId', id: true)]
     public int $id;

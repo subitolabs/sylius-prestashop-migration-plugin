@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Jgrasp\PrestashopMigrationPlugin\DataTransformer\Resource\Address;
@@ -31,15 +32,14 @@ class ZoneResourceTransformer implements ResourceTransformerInterface
 
     public function __construct(
         ResourceTransformerInterface $transformer,
-        RepositoryInterface          $countryRepository,
-        EntityRepositoryInterface    $countryRepositoryPrestashop,
-        FactoryInterface             $zoneMemberFactory
-    )
-    {
-        $this->transformer = $transformer;
-        $this->countryRepository = $countryRepository;
+        RepositoryInterface $countryRepository,
+        EntityRepositoryInterface $countryRepositoryPrestashop,
+        FactoryInterface $zoneMemberFactory
+    ) {
+        $this->transformer                 = $transformer;
+        $this->countryRepository           = $countryRepository;
         $this->countryRepositoryPrestashop = $countryRepositoryPrestashop;
-        $this->zoneMemberFactory = $zoneMemberFactory;
+        $this->zoneMemberFactory           = $zoneMemberFactory;
     }
 
     public function transform(ModelInterface $model): ResourceInterface
@@ -47,14 +47,14 @@ class ZoneResourceTransformer implements ResourceTransformerInterface
         /** @var ZoneInterface $resource */
         $resource = $this->transformer->transform($model);
 
-        $resource->setCode(StringInflector::nameToLowercaseCode(Transliterator::transliterate($resource->getName().'_'.$resource->getPrestashopId())));
+        $resource->setCode(StringInflector::nameToLowercaseCode(Transliterator::transliterate($resource->getName() . '_' . $resource->getPrestashopId())));
         $resource->setType(ZoneInterface::TYPE_COUNTRY);
         $resource->setScope(Scope::ALL);
 
         $countries = $this->countryRepositoryPrestashop->findByZoneId($resource->getPrestashopId());
 
         foreach ($countries as $row) {
-            $countryId = (int)$row['id_country'];
+            $countryId = (int) $row['id_country'];
             /** @var CountryInterface|null $country */
             $country = $this->countryRepository->findOneBy(['prestashopId' => $countryId]);
 
@@ -71,5 +71,4 @@ class ZoneResourceTransformer implements ResourceTransformerInterface
 
         return $resource;
     }
-
 }

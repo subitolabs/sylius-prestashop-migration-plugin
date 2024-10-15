@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Jgrasp\PrestashopMigrationPlugin\Attribute;
@@ -18,9 +19,9 @@ final class Field
 
     public function __construct(string $source, ?string $target = null, bool $id = false, bool $translatable = false)
     {
-        $this->source = $source;
-        $this->target = $target;
-        $this->id = $id;
+        $this->source       = $source;
+        $this->target       = $target;
+        $this->id           = $id;
         $this->translatable = $translatable;
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Jgrasp\PrestashopMigrationPlugin\Validator\Taxation;
@@ -25,5 +26,4 @@ class TaxCategoryValidator implements ValidatorInterface
     {
         return $this->validator->validate($resource) ;
     }
-
 }

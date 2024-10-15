@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Jgrasp\PrestashopMigrationPlugin\DataCollector;
@@ -23,5 +24,4 @@ class EntityCollector implements DataCollectorInterface
     {
         return $this->repository->count();
     }
-
 }

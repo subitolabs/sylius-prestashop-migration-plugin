@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Jgrasp\PrestashopMigrationPlugin\Model\Tax;
@@ -29,5 +30,4 @@ class TaxModel implements ModelInterface
     {
         return null !== $this->getName($locale);
     }
-
 }

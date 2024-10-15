@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Jgrasp\PrestashopMigrationPlugin\Command;
@@ -22,7 +23,7 @@ class ResourceCommand extends Command
     {
         parent::__construct();
 
-        $this->name = ucfirst(StringInflector::nameToCamelCase($name));
+        $this->name     = ucfirst(StringInflector::nameToCamelCase($name));
         $this->importer = $importer;
     }
 
@@ -36,16 +37,15 @@ class ResourceCommand extends Command
         $progressBar->setFormat('%percent:3s%% [%bar%] %elapsed:6s%/%estimated:-6s%');
 
         $this->importer->import(function (int $step, array $violations) use ($progressBar, $io) {
-
-            array_walk_recursive($violations,
+            array_walk_recursive(
+                $violations,
                 function (Violation $violation) use ($io) {
                     $io->warning([
                         sprintf('%s %s not import', $this->name, $violation->getEntityId()),
-                        sprintf('Reason : %s', $violation->getMessage())
+                        sprintf('Reason : %s', $violation->getMessage()),
                     ]);
                 }
             );
-
 
             $progressBar->advance($step);
         });

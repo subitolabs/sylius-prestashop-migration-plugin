@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Jgrasp\PrestashopMigrationPlugin\DataTransformer\Resource\Channel;
@@ -25,15 +26,14 @@ class ChannelResourceTransformer implements ResourceTransformerInterface
 
     public function __construct(
         ResourceTransformerInterface $transformer,
-        RepositoryInterface          $localeRepository,
-        RepositoryInterface          $currencyRepository,
-        ParameterBagInterface        $parameterBag
-    )
-    {
-        $this->transformer = $transformer;
-        $this->localeRepository = $localeRepository;
+        RepositoryInterface $localeRepository,
+        RepositoryInterface $currencyRepository,
+        ParameterBagInterface $parameterBag
+    ) {
+        $this->transformer        = $transformer;
+        $this->localeRepository   = $localeRepository;
         $this->currencyRepository = $currencyRepository;
-        $this->parameterBag = $parameterBag;
+        $this->parameterBag       = $parameterBag;
     }
 
     /**
@@ -56,7 +56,7 @@ class ChannelResourceTransformer implements ResourceTransformerInterface
 
         if (null === $locale) {
             $locales = $this->localeRepository->findAll();
-            $locale = reset($locales);
+            $locale  = reset($locales);
 
             if ($locale === false) {
                 $locale = null;
@@ -77,5 +77,4 @@ class ChannelResourceTransformer implements ResourceTransformerInterface
 
         return $channel;
     }
-
 }

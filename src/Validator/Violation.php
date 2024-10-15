@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Jgrasp\PrestashopMigrationPlugin\Validator;
@@ -14,7 +15,7 @@ class Violation
     public function __construct(int $entityId, string $message)
     {
         $this->entityId = $entityId;
-        $this->message = $message;
+        $this->message  = $message;
     }
 
     public function getEntityId(): int

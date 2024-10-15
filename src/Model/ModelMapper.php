@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Jgrasp\PrestashopMigrationPlugin\Model;
@@ -18,9 +19,9 @@ final class ModelMapper implements ModelMapperInterface
 
     public function __construct(string $model, PropertyAttributeAccessor $propertyAttributeAccessor, LocaleFetcher $fetcher)
     {
-        $this->model = $model;
+        $this->model                     = $model;
         $this->propertyAttributeAccessor = $propertyAttributeAccessor;
-        $this->fetcher = $fetcher;
+        $this->fetcher                   = $fetcher;
     }
 
     public function map(array $data): ModelInterface
@@ -31,7 +32,6 @@ final class ModelMapper implements ModelMapperInterface
         $properties = $reflection->getProperties();
 
         foreach ($properties as $property) {
-
             $attribute = $this->propertyAttributeAccessor->get($property, Field::class);
 
             if ($attribute) {
@@ -51,7 +51,7 @@ final class ModelMapper implements ModelMapperInterface
                         $locale = $this->fetcher->getLocaleCode($langId);
 
                         if (null === $locale) {
-                            throw new \Exception(sprintf("Locale not found with langId %s.", $langId));
+                            throw new \Exception(sprintf('Locale not found with langId %s.', $langId));
                         }
 
                         $value[$locale] = $translation;

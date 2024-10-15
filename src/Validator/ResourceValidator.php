@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Jgrasp\PrestashopMigrationPlugin\Validator;
@@ -14,7 +15,7 @@ class ResourceValidator implements ValidatorInterface
 
     public function __construct(\Symfony\Component\Validator\Validator\ValidatorInterface $validator, ViolationBagInterface $violationBag)
     {
-        $this->validator = $validator;
+        $this->validator    = $validator;
         $this->violationBag = $violationBag;
     }
 
@@ -31,5 +32,4 @@ class ResourceValidator implements ValidatorInterface
 
         return $violations->count() === 0;
     }
-
 }

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Jgrasp\PrestashopMigrationPlugin\Model\Category;
@@ -10,7 +11,8 @@ use Jgrasp\PrestashopMigrationPlugin\Model\UrlModelTrait;
 
 class CategoryModel implements ModelInterface
 {
-    use UrlModelTrait, ToggleableTrait;
+    use UrlModelTrait;
+    use ToggleableTrait;
 
     #[Field(source: 'id_category', target: 'prestashopId', id: true)]
     public int $id;
@@ -26,5 +28,4 @@ class CategoryModel implements ModelInterface
 
     #[Field(source: 'description', translatable: true)]
     public array $description;
-
 }
