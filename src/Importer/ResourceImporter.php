@@ -54,12 +54,7 @@ class ResourceImporter implements ImporterInterface
             }
 
             foreach ($collection as $item) {
-                $syliusResource = $this->persister->persist($item);
-
-                if ($syliusResource !== null) {
-                    echo json_encode($item) . PHP_EOL . PHP_EOL;
-                    echo str_replace(PHP_EOL, '', $this->serializer->serialize($syliusResource, 'json')) . PHP_EOL . PHP_EOL . PHP_EOL;
-                }
+                $this->persister->persist($item);
             }
 
             $this->entityManager->flush();

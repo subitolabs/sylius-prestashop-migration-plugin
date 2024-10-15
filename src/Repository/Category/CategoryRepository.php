@@ -8,7 +8,7 @@ use Jgrasp\PrestashopMigrationPlugin\Repository\EntityRepository;
 
 class CategoryRepository extends EntityRepository
 {
-    public function findAll(int $limit = null, int $offset = null): array
+    public function findAll(array $critieria = [], int $limit = null, int $offset = null): array
     {
         $query = $this
             ->createQueryBuilder()

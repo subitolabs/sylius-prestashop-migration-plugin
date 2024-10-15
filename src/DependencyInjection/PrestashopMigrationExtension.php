@@ -29,6 +29,7 @@ use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\DependencyInjection\Reference;
+use Symfony\Component\Serializer\Serializer;
 
 final class PrestashopMigrationExtension extends Extension
 {
@@ -203,6 +204,7 @@ final class PrestashopMigrationExtension extends Extension
             new Reference($this->getDefinitionPersisterId($entity)),
             new Reference('doctrine.orm.entity_manager'),
             new Reference(ViolationBagInterface::class),
+            new Reference('jms_serializer'),
         ];
 
         $definition = new Definition(ResourceImporter::class, $arguments);
