@@ -131,6 +131,20 @@
             <argument type="service" id="Jgrasp\PrestashopMigrationPlugin\Resolver\ConfigurationResolver"/>
         </service>
 
+        <service id="Jgrasp\PrestashopMigrationPlugin\DataTransformer\Resource\Product\ProductFeatureResourceTransformer"
+                 decorates="prestashop.data_transformer.resource.product_attribute">
+            <argument type="service" id=".inner"/>
+            <argument type="service" id="Jgrasp\PrestashopMigrationPlugin\Model\LocaleFetcher"/>
+            <argument type="service" id="prestashop.repository.product_value" />
+        </service>
+
+        <service id="Jgrasp\PrestashopMigrationPlugin\DataTransformer\Resource\Product\ProductFeatureValueResourceTransformer"
+                 decorates="prestashop.data_transformer.resource.product_attribute_value">
+            <argument type="service" id="Jgrasp\PrestashopMigrationPlugin\Model\LocaleFetcher"/>
+            <argument type="service" id="sylius.repository.product"/>
+            <argument type="service" id="sylius.repository.product_attribute"/>
+        </service>
+
         <service id="Jgrasp\PrestashopMigrationPlugin\DataTransformer\Resource\Product\ProductOptionResourceTransformer"
                  decorates="prestashop.data_transformer.resource.product_option">
             <argument type="service" id=".inner"/>
@@ -215,6 +229,13 @@
             <argument type="service" id="Jgrasp\PrestashopMigrationPlugin\Attribute\PropertyAttributeAccessor"/>
         </service>
 
+        <service id="Jgrasp\PrestashopMigrationPlugin\Provider\Locale\LocaleResourceProvider"
+                 decorates="prestashop.provider.currency">
+            <argument type="service" id=".inner"/>
+            <argument type="service" id="sylius.repository.currency"/>
+            <argument type="service" id="Jgrasp\PrestashopMigrationPlugin\Attribute\PropertyAttributeAccessor"/>
+        </service>
+
         <!-- REPOSITORY -->
         <service id="prestashop.repository.configuration"
                  alias="Jgrasp\PrestashopMigrationPlugin\Repository\Configuration\ConfigurationRepository"/>
@@ -245,6 +266,17 @@
             <argument>id_stock_available</argument>
             <argument type="service" id="doctrine.dbal.prestashop_connection"/>
         </service>
+
+        <service id="Jgrasp\PrestashopMigrationPlugin\Repository\Product\ProductFeatureRepository">
+            <argument>feature</argument>
+            <argument>%prestashop.prefix%</argument>
+            <argument>id_stock_available</argument>
+            <argument type="service" id="doctrine.dbal.prestashop_connection"/>
+        </service>
+
+        <service id="prestashop.repository.product_value"
+                 alias="Jgrasp\PrestashopMigrationPlugin\Repository\Product\ProductFeatureRepository"/>
+
         <!-- VALIDATOR -->
 
         <service id="Jgrasp\PrestashopMigrationPlugin\Validator\Country\CountryValidator"
