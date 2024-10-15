@@ -16,6 +16,6 @@ class ConfigurationRepository extends EntityRepository
             ->from($this->getTable())
             ->where($query->expr()->like('name', $query->expr()->literal('PS_STOCK_MANAGEMENT')));
 
-        return (bool) $this->getConnection()->executeQuery($query)->fetchOne();
+        return (bool) $this->getConnection()->executeQuery($query->getSQL())->fetchOne();
     }
 }

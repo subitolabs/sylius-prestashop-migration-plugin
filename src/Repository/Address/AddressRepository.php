@@ -22,7 +22,7 @@ class AddressRepository extends EntityRepository implements AddressEntityReposit
                 ->setFirstResult($offset);
         }
 
-        return $this->getConnection()->executeQuery($query)->fetchAllAssociative();
+        return $this->getConnection()->executeQuery($query->getSQL())->fetchAllAssociative();
     }
 
     public function countCustomerAddresses(): int
@@ -33,6 +33,6 @@ class AddressRepository extends EntityRepository implements AddressEntityReposit
             ->from($this->getTable())
             ->where($query->expr()->neq('id_customer', 0));
 
-        return (int) $this->getConnection()->executeQuery($query)->fetchOne();
+        return (int) $this->getConnection()->executeQuery($query->getSQL())->fetchOne();
     }
 }

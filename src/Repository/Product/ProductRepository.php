@@ -19,7 +19,7 @@ class ProductRepository extends EntityRepository
             ->from($this->getTable())
             ->where($query->expr()->like('reference', $query->expr()->literal($reference)));
 
-        return $this->getConnection()->executeQuery($query)->fetchAllAssociative();
+        return $this->getConnection()->executeQuery($query->getSQL())->fetchAllAssociative();
     }
 
     public function findBySlug(string $slug): array
@@ -31,7 +31,7 @@ class ProductRepository extends EntityRepository
             ->from($this->getTableTranslation())
             ->where($query->expr()->like('link_rewrite', $query->expr()->literal($slug)));
 
-        return $this->getConnection()->executeQuery($query)->fetchAllAssociative();
+        return $this->getConnection()->executeQuery($query->getSQL())->fetchAllAssociative();
     }
 
     public function getCategories(int $productId): array
@@ -43,7 +43,7 @@ class ProductRepository extends EntityRepository
             ->from($this->getPrefix() . 'category_product')
             ->where($query->expr()->eq('id_product', $productId));
 
-        return $this->getConnection()->executeQuery($query)->fetchAllAssociative();
+        return $this->getConnection()->executeQuery($query->getSQL())->fetchAllAssociative();
     }
 
     public function getShops(int $productId): array
@@ -55,7 +55,7 @@ class ProductRepository extends EntityRepository
             ->from($this->getTableChannel())
             ->where($query->expr()->eq('id_product', $productId));
 
-        return $this->getConnection()->executeQuery($query)->fetchAllAssociative();
+        return $this->getConnection()->executeQuery($query->getSQL())->fetchAllAssociative();
     }
 
     public function getImages(int $productId): array
@@ -68,7 +68,7 @@ class ProductRepository extends EntityRepository
             ->where($query->expr()->eq('id_product', $productId))
             ->orderBy('position', 'ASC');
 
-        return $this->getConnection()->executeQuery($query)->fetchAllAssociative();
+        return $this->getConnection()->executeQuery($query->getSQL())->fetchAllAssociative();
     }
 
     public function getPriceByShopId(int $productId, int $shopId): float
@@ -81,6 +81,6 @@ class ProductRepository extends EntityRepository
             ->where($query->expr()->eq('id_product', $productId))
             ->andWhere($query->expr()->eq('id_shop', $shopId));
 
-        return (float) $this->getConnection()->executeQuery($query)->fetchOne();
+        return (float) $this->getConnection()->executeQuery($query->getSQL())->fetchOne();
     }
 }

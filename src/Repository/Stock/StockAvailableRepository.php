@@ -23,6 +23,6 @@ class StockAvailableRepository extends EntityRepository
             ->where($query->expr()->eq('id_product', $productId))
             ->andWhere($query->expr()->eq('id_product_attribute', $productAttributeId));
 
-        return (int) $this->getConnection()->executeQuery($query)->fetchOne();
+        return (int) $this->getConnection()->executeQuery($query->getSQL())->fetchOne();
     }
 }

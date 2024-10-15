@@ -17,7 +17,7 @@ class CarrierRepository extends EntityRepository
             ->from($this->getTable() . '_zone')
             ->where($query->expr()->eq('id_carrier', $carrierId));
 
-        return $this->getConnection()->executeQuery($query)->fetchAllAssociative();
+        return $this->getConnection()->executeQuery($query->getSQL())->fetchAllAssociative();
     }
 
     public function getShops(int $carrierId): array
@@ -29,6 +29,6 @@ class CarrierRepository extends EntityRepository
             ->from($this->getTableChannel())
             ->where($query->expr()->eq('id_carrier', $carrierId));
 
-        return $this->getConnection()->executeQuery($query)->fetchAllAssociative();
+        return $this->getConnection()->executeQuery($query->getSQL())->fetchAllAssociative();
     }
 }

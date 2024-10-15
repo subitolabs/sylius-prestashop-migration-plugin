@@ -17,6 +17,6 @@ class CountryRepository extends EntityRepository
             ->from($this->getTable())
             ->where($query->expr()->eq('id_zone', $zoneId));
 
-        return $this->getConnection()->executeQuery($query)->fetchAllAssociative();
+        return $this->getConnection()->executeQuery($query->getSQL())->fetchAllAssociative();
     }
 }

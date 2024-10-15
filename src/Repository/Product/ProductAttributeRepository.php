@@ -23,7 +23,7 @@ class ProductAttributeRepository extends EntityRepository
             )
             ->where($query->expr()->eq($this->getTable() . '.id_product', $productId));
 
-        return $this->getConnection()->executeQuery($query)->fetchAllAssociative();
+        return $this->getConnection()->executeQuery($query->getSQL())->fetchAllAssociative();
     }
 
     public function getAttributes(int $productAttributeId): array
@@ -41,7 +41,7 @@ class ProductAttributeRepository extends EntityRepository
             )
             ->where($query->expr()->eq($this->getCombinationTable() . '.id_product_attribute', $productAttributeId));
 
-        return $this->getConnection()->executeQuery($query)->fetchAllAssociative();
+        return $this->getConnection()->executeQuery($query->getSQL())->fetchAllAssociative();
     }
 
     private function getCombinationTable()

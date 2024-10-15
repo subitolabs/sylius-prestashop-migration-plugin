@@ -22,7 +22,7 @@ class CustomerRepository extends EntityRepository
                 ->setFirstResult($offset);
         }
 
-        return $this->getConnection()->executeQuery($query)->fetchAllAssociative();
+        return $this->getConnection()->executeQuery($query->getSQL())->fetchAllAssociative();
     }
 
     public function countAllNotGuest(): int
@@ -33,6 +33,6 @@ class CustomerRepository extends EntityRepository
             ->from($this->getTable())
             ->where($query->expr()->neq('is_guest', true));
 
-        return (int) $this->getConnection()->executeQuery($query)->fetchOne();
+        return (int) $this->getConnection()->executeQuery($query->getSQL())->fetchOne();
     }
 }

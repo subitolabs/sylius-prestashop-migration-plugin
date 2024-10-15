@@ -22,6 +22,6 @@ class CategoryRepository extends EntityRepository
                 ->setFirstResult($offset);
         }
 
-        return $this->getConnection()->executeQuery($query)->fetchAllAssociative();
+        return $this->getConnection()->executeQuery($query->getSQL())->fetchAllAssociative();
     }
 }
