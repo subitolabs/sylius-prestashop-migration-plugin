@@ -28,7 +28,7 @@ final class ResourceTransformer implements ResourceTransformerInterface
         $this->propertyAttributeAccessor = $propertyAttributeAccessor;
     }
 
-    public function transform(ModelInterface $model): array | ResourceInterface | null
+    public function transform(ModelInterface $model): ResourceInterface
     {
         $resource = $this->resourceProvider->getResource($model);
 

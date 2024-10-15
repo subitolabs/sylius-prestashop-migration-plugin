@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Jgrasp\PrestashopMigrationPlugin\DataTransformer\Resource\Product;
 
 use Jgrasp\PrestashopMigrationPlugin\DataTransformer\Resource\ResourceTransformerInterface;
+use Jgrasp\PrestashopMigrationPlugin\DataTransformer\StringUtils;
 use Jgrasp\PrestashopMigrationPlugin\Model\Attribute\AttributeModel;
 use Jgrasp\PrestashopMigrationPlugin\Model\LocaleFetcher;
 use Jgrasp\PrestashopMigrationPlugin\Model\ModelInterface;
-use Sylius\Component\Core\Formatter\StringInflector;
 use Sylius\Component\Product\Model\ProductOptionValueInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
@@ -53,7 +53,7 @@ class ProductOptionValueResourceTransformer implements ResourceTransformerInterf
             $resource->setValue($name);
 
             if (null === $resource->getId() && null === $resource->getCode()) {
-                $resource->setCode(StringInflector::nameToLowercaseCode(sprintf('%s %s', $resource->getName(), $model->id)));
+                $resource->setCode(StringUtils::stringToCode(sprintf('%s %s', $resource->getName(), $model->id)));
             }
         }
 

@@ -7,6 +7,7 @@ namespace Jgrasp\PrestashopMigrationPlugin\Persister;
 use Doctrine\ORM\EntityManagerInterface;
 use Jgrasp\PrestashopMigrationPlugin\DataTransformer\TransformerInterface;
 use Jgrasp\PrestashopMigrationPlugin\Validator\ValidatorInterface;
+use Sylius\Component\Resource\Model\ResourceInterface;
 
 class ResourcePersister implements PersisterInterface
 {

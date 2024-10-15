@@ -19,9 +19,11 @@ class TaxonPersister implements PersisterInterface
         $this->manager   = $manager;
     }
 
-    public function persist(array $data): void
+    public function persist(array $data): array
     {
         $this->persister->persist($data);
         $this->manager->flush();
+
+        return $data;
     }
 }
