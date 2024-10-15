@@ -207,6 +207,14 @@
             <argument type="service" id="sylius.factory.product"/>
         </service>
 
+        <!--RESOURCE PROVIDER -->
+        <service id="Jgrasp\PrestashopMigrationPlugin\Provider\Locale\LocaleResourceProvider"
+                 decorates="prestashop.provider.locale">
+            <argument type="service" id=".inner"/>
+            <argument type="service" id="sylius.repository.locale"/>
+            <argument type="service" id="Jgrasp\PrestashopMigrationPlugin\Attribute\PropertyAttributeAccessor"/>
+        </service>
+
         <!-- REPOSITORY -->
         <service id="prestashop.repository.configuration"
                  alias="Jgrasp\PrestashopMigrationPlugin\Repository\Configuration\ConfigurationRepository"/>
