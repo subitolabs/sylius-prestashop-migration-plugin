@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Jgrasp\PrestashopMigrationPlugin\Provider;
 
 use ReflectionClass;
-use Jgrasp\PrestashopMigrationPlugin\Attribute\PropertyAttributeAccessor;
 use Jgrasp\PrestashopMigrationPlugin\Model\ModelInterface;
 use Jgrasp\PrestashopMigrationPlugin\Provider\ResourceProviderInterface;
 use Sylius\Component\Core\Formatter\StringInflector;
@@ -16,8 +15,6 @@ trait WithCodeResourceProviderTrait {
     private RepositoryInterface $repository;
 
     private ResourceProviderInterface $provider;
-
-    private PropertyAttributeAccessor $propertyAttributeAccessor;
 
     public function __construct(ResourceProviderInterface $provider, RepositoryInterface $repository)
     {
