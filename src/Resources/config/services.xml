@@ -229,7 +229,7 @@
             <argument type="service" id="Jgrasp\PrestashopMigrationPlugin\Attribute\PropertyAttributeAccessor"/>
         </service>
 
-        <service id="Jgrasp\PrestashopMigrationPlugin\Provider\Locale\LocaleResourceProvider"
+        <service id="Jgrasp\PrestashopMigrationPlugin\Provider\Currency\CurrencyResourceProvider"
                  decorates="prestashop.provider.currency">
             <argument type="service" id=".inner"/>
             <argument type="service" id="sylius.repository.currency"/>
