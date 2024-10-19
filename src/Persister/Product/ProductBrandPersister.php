@@ -29,8 +29,6 @@ class ProductBrandPersister implements PersisterInterface
             $product = $this->productRepository->findOneBy(['prestashopId' => $data['id_product']]);
 
             if (!empty($product)) {
-                dump($brand);
-                die('ok');
                 $product->setBrand($brand);
             }
         }
