@@ -64,10 +64,10 @@ final class PrestashopMigrationExtension extends Extension
             $this->createMapperDefinition($resource, $configuration, $container);
             $this->createProviderDefinition($configuration, $container);
             $this->createDataTransformerDefinition($configuration, $container);
-            $this->createImporterDefinition($configuration, $container);
+            $this->createImporterDefinition($resource, $configuration, $container);
             $this->createValidatorDefinition($configuration, $container);
             $this->createPersisterDefinition($configuration, $container);
-            $this->createCommandDefinition($configuration, $container);
+            $this->createCommandDefinition($resource, $configuration, $container);
         }
     }
 
@@ -190,18 +190,18 @@ final class PrestashopMigrationExtension extends Extension
         $container->setDefinition($this->getDefinitionDataTransformerId($entity), $definition);
     }
 
-    private function createImporterDefinition(array $configuration, ContainerBuilder $container): void
+    private function createImporterDefinition(string $resource, array $configuration, ContainerBuilder $container): void
     {
         $entity = $configuration['sylius'];
         $table  = $configuration['table'];
 
-        $definitionId = $this->getDefinitionImporterId($entity);
+        $definitionId = $this->getDefinitionImporterId($resource);
 
         $arguments = [
             $definitionId,
             $container->getParameter('prestashop.flush_step'),
             new Reference($this->getDefinitionCollectorId($table)),
-            new Reference($this->getDefinitionPersisterId($entity)),
+            new Reference($configuration['persister'] ?? $this->getDefinitionPersisterId($entity)),
             new Reference('doctrine.orm.entity_manager'),
             new Reference(ViolationBagInterface::class),
             new Reference('jms_serializer'),
@@ -233,19 +233,19 @@ final class PrestashopMigrationExtension extends Extension
         $container->setDefinition($definitionId, $definition);
     }
 
-    private function createCommandDefinition(array $configuration, ContainerBuilder $container): void
+    private function createCommandDefinition(string $resource, array $configuration, ContainerBuilder $container): void
     {
         $entity       = $configuration['sylius'];
         $definitionId = $this->getDefinitionCommandId($entity);
 
         $arguments = [
             $entity,
-            new Reference($this->getDefinitionImporterId($entity)),
+            new Reference($this->getDefinitionImporterId($resource)),
         ];
 
         $definition = new Definition(ResourceCommand::class, $arguments);
         $definition
-            ->addTag('console.command', ['command' => sprintf('prestashop:migration:%s', $entity)])
+            ->addTag('console.command', ['command' => sprintf('prestashop:migration:%s', $resource)])
             ->addTag('prestashop.command.migration', ['priority' => $configuration['priority']])
             ->setPublic(true);
 
