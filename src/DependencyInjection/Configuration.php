@@ -15,6 +15,8 @@ use Jgrasp\PrestashopMigrationPlugin\Model\Customer\CustomerModel;
 use Jgrasp\PrestashopMigrationPlugin\Model\Employee\EmployeeModel;
 use Jgrasp\PrestashopMigrationPlugin\Model\Lang\LangModel;
 use Jgrasp\PrestashopMigrationPlugin\Model\Product\ProductAttributeModel;
+use Jgrasp\PrestashopMigrationPlugin\Model\Product\ProductBrandModel;
+use Jgrasp\PrestashopMigrationPlugin\Model\Product\ProductBrandProductModel;
 use Jgrasp\PrestashopMigrationPlugin\Model\Product\ProductModel;
 use Jgrasp\PrestashopMigrationPlugin\Model\Product\ProductFeatureModel;
 use Jgrasp\PrestashopMigrationPlugin\Model\Shop\ShopModel;
@@ -266,6 +268,31 @@ class Configuration implements ConfigurationInterface
                             ->scalarNode('use_translation')->defaultValue(false)->end()
                             ->scalarNode('sylius')->defaultValue('zone')->end()
                             ->scalarNode('priority')->defaultValue(250)->end()
+                        ->end()
+                    ->end()
+                    ->arrayNode('brand')
+                        ->addDefaultsIfNotSet()
+                        ->children()
+                            ->scalarNode('table')->defaultValue('product')->end()
+                            ->scalarNode('repository')->defaultValue(EntityRepository::class)->end()
+                            ->scalarNode('model')->defaultValue(ProductBrandModel::class)->end()
+                            ->scalarNode('primary_key')->defaultValue('id_manufacturer')->end()
+                            ->scalarNode('use_translation')->defaultValue(true)->end()
+                            ->scalarNode('sylius')->defaultValue('product_brand')->end()
+                            ->scalarNode('priority')->defaultValue(250)->end()
+                        ->end()
+                    ->end()
+                    ->arrayNode('brand_by_product')
+                        ->addDefaultsIfNotSet()
+                        ->children()
+                            ->scalarNode('table')->defaultValue('product')->end()
+                            ->scalarNode('repository')->defaultValue(ProductRepository::class)->end()
+                            ->scalarNode('model')->defaultValue(ProductBrandProductModel::class)->end()
+                            ->scalarNode('primary_key')->defaultValue('id_product')->end()
+                            ->scalarNode('use_translation')->defaultValue(false)->end()
+                            ->scalarNode('sylius')->defaultValue('product')->end()
+                            ->scalarNode('priority')->defaultValue(250)->end()
+                            ->scalarNode('persister')->defaultValue('prestashop.persister.product_brand_product')->end()
                         ->end()
                     ->end()
                 ->end()
