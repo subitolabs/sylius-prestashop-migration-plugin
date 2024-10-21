@@ -73,12 +73,6 @@
             <argument type="service" id="doctrine.orm.entity_manager"/>
         </service>
 
-        <service id="prestashop.persister.product_brand_product"
-                 class="Jgrasp\PrestashopMigrationPlugin\Persister\Product\ProductBrandPersister">
-            <argument type="service" id="sylius.repository.product" />
-            <argument type="service" id="sylius.repository.product_brand" />
-        </service>
-
         <!-- RESOLVER -->
         <service id="Jgrasp\PrestashopMigrationPlugin\Resolver\ConfigurationResolver">
             <argument type="service" id="prestashop.repository.configuration"/>
@@ -117,11 +111,6 @@
 
         <service id="Jgrasp\PrestashopMigrationPlugin\DataTransformer\Resource\Lang\LangResourceTransformer"
                  decorates="prestashop.data_transformer.resource.locale">
-            <argument type="service" id=".inner"/>
-        </service>
-
-        <service id="Jgrasp\PrestashopMigrationPlugin\DataTransformer\Resource\Product\ProductBrandResourceTransformer"
-                 decorates="prestashop.data_transformer.resource.product_brand">
             <argument type="service" id=".inner"/>
         </service>
 

@@ -52,6 +52,10 @@ final class PrestashopMigrationExtension extends Extension
             throw new InvalidConfigurationException('The configuration for "public_directory" is not defined. Please insert a value (ex : "https://www.example.com/img/p/")');
         }
 
+        if ($resources['brand']['enabled']) {
+            $loader->load('brand_services.xml');
+        }
+
         $container->setParameter('prestashop.resources', $resources);
         $container->setParameter('prestashop.prefix', $prefix);
         $container->setParameter('prestashop.public_directory', $publicDirectory);
@@ -59,15 +63,17 @@ final class PrestashopMigrationExtension extends Extension
         $container->setParameter('prestashop.flush_step', $flushStep);
 
         foreach ($resources as $resource => $configuration) {
-            $this->createRepositoryDefinition($prefix, $resource, $configuration, $container);
-            $this->createCollectorDefinition($configuration, $container);
-            $this->createMapperDefinition($resource, $configuration, $container);
-            $this->createProviderDefinition($configuration, $container);
-            $this->createDataTransformerDefinition($configuration, $container);
-            $this->createImporterDefinition($resource, $configuration, $container);
-            $this->createValidatorDefinition($configuration, $container);
-            $this->createPersisterDefinition($configuration, $container);
-            $this->createCommandDefinition($resource, $configuration, $container);
+            if ($configuration['enabled']) {
+                $this->createRepositoryDefinition($prefix, $resource, $configuration, $container);
+                $this->createCollectorDefinition($configuration, $container);
+                $this->createMapperDefinition($resource, $configuration, $container);
+                $this->createProviderDefinition($configuration, $container);
+                $this->createDataTransformerDefinition($configuration, $container);
+                $this->createImporterDefinition($resource, $configuration, $container);
+                $this->createValidatorDefinition($configuration, $container);
+                $this->createPersisterDefinition($configuration, $container);
+                $this->createCommandDefinition($resource, $configuration, $container);
+            }
         }
     }
 
