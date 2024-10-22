@@ -17,4 +17,10 @@ class ProductAttributeModel implements ModelInterface
 
     #[Field(source: 'price')]
     public int $price;
+
+    #[Field(source: 'ean13', target: 'ean13')]
+    public string $ean13;
+
+    #[Field(source: 'weight', target: 'weight')]
+    public float $weight;
 }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Jgrasp\PrestashopMigrationPlugin\DataTransformer\Resource\Product;
 
 use Jgrasp\PrestashopMigrationPlugin\DataTransformer\Resource\ResourceTransformerInterface;
+use Jgrasp\PrestashopMigrationPlugin\Entity\PrestashopTrait;
 use Jgrasp\PrestashopMigrationPlugin\Model\LocaleFetcher;
 use Jgrasp\PrestashopMigrationPlugin\Model\ModelInterface;
 use Jgrasp\PrestashopMigrationPlugin\Model\Product\ProductAttributeModel;
@@ -72,18 +73,19 @@ class ProductVariantResourceTransformer implements ResourceTransformerInterface
     /**
      * @param ProductAttributeModel $model
      *
-     * @return ResourceInterface
+     * @return ResourceInterface|null
+     * @throws \Exception
      */
-    public function transform(ModelInterface $model): ResourceInterface
+    public function transform(ModelInterface $model): ?ResourceInterface
     {
-        /** @var ProductVariantInterface $resource */
+        /** @var ProductVariantInterface|PrestashopTrait $resource */
         $resource = $this->transformer->transform($model);
 
-        /** @var ProductInterface|ChannelsAwareInterface|null $product */
+        /** @var ProductInterface|PrestashopTrait|ChannelsAwareInterface|null $product */
         $product = $this->productRepository->findOneBy(['prestashopId' => $model->productId]);
 
         if (null === $product) {
-            return $resource;
+            return null;
         }
 
         $code = $product->getCode() . '_' . $resource->getPrestashopId();
