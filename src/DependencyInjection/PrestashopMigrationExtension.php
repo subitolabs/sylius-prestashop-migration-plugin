@@ -53,7 +53,7 @@ final class PrestashopMigrationExtension extends Extension
         }
 
         if ($resources['brand']['enabled']) {
-            $loader->load('brand_services.xml');
+//            $loader->load('brand_services.xml');
         }
 
         $container->setParameter('prestashop.resources', $resources);
@@ -74,16 +74,6 @@ final class PrestashopMigrationExtension extends Extension
                 $this->createPersisterDefinition($configuration, $container);
                 $this->createCommandDefinition($resource, $configuration, $container);
             }
-
-            $this->createRepositoryDefinition($prefix, $resource, $configuration, $container);
-            $this->createCollectorDefinition($configuration, $container);
-            $this->createMapperDefinition($resource, $configuration, $container);
-            $this->createProviderDefinition($configuration, $container);
-            $this->createDataTransformerDefinition($configuration, $container);
-            $this->createImporterDefinition($resource, $configuration, $container);
-            $this->createValidatorDefinition($configuration, $container);
-            $this->createPersisterDefinition($configuration, $container);
-            $this->createCommandDefinition($resource, $configuration, $container);
         }
     }
 
