@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services
+        https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="Jgrasp\PrestashopMigrationPlugin\DataTransformer\Resource\Product\ProductBrandResourceTransformer"
+                 decorates="prestashop.data_transformer.resource.product_brand">
+            <argument type="service" id=".inner"/>
+        </service>
+
+        <service id="prestashop.persister.product_brand_product"
+                 class="Jgrasp\PrestashopMigrationPlugin\Persister\Product\ProductBrandPersister">
+            <argument type="service" id="sylius.repository.product" />
+            <argument type="service" id="sylius.repository.product_brand" />
+        </service>
+    </services>
+</container>
